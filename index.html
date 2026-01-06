@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GRVL DRMA - 120 Miles, 11,000' of Climbing | Bay City, Wisconsin</title>
-    <meta name="description" content="Free grassroots gravel race in the Driftless region of Wisconsin. 120 miles, 11,000 feet of climbing through the hilliest possible route.">
+    <meta name="description" content="Free grassroots gravel race in the Driftless region of Wisconsin. 120 miles, 11,000 feet of climbing through the hilliest possible route. NFT race bibs available.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -118,6 +118,14 @@
         .countdown-pulse {
             animation: countdown-pulse 2s ease-in-out infinite;
         }
+
+        .wallet-connected {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .wallet-disconnected {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+        }
     </style>
 </head>
 <body class="bg-gradient-to-b from-gray-950 to-gray-900 text-gray-100 min-h-screen">
@@ -128,11 +136,15 @@
     <nav class="sticky-nav py-4 px-6">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="font-display text-3xl gradient-text">GRVL DRMA</div>
-            <div class="hidden md:flex gap-6 text-sm font-medium">
+            <div class="hidden md:flex gap-6 text-sm font-medium items-center">
                 <a href="#about" class="hover:text-orange-500 transition">About</a>
                 <a href="#route" class="hover:text-orange-500 transition">Route</a>
+                <a href="#tech" class="hover:text-orange-500 transition">Tech Requirements</a>
                 <a href="#register" class="hover:text-orange-500 transition">Register</a>
                 <a href="#faq" class="hover:text-orange-500 transition">FAQ</a>
+                <button id="walletBtn" class="px-4 py-2 wallet-disconnected rounded-full text-xs font-bold transition">
+                    Connect Wallet
+                </button>
             </div>
             <a href="#register" class="px-4 py-2 bg-gradient-to-r from-orange-600 to-orange-500 rounded-full text-sm font-bold hover:scale-105 transition">
                 Register FREE
@@ -193,7 +205,10 @@
 
             <div class="flex flex-wrap items-center justify-center gap-4 pt-8">
                 <a href="#register" class="px-8 py-4 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105">
-                    Register Now (It's FREE!)
+                    Register Now (FREE)
+                </a>
+                <a href="#tech" class="px-8 py-4 bg-purple-600 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105">
+                    Mint NFT Race Bib
                 </a>
                 <a href="#route" class="px-8 py-4 bg-gray-800 text-gray-100 font-bold text-lg rounded-full border-2 border-gray-600 hover:bg-gray-700 transition-all hover:scale-105">
                     View Route Details
@@ -202,8 +217,121 @@
 
             <p class="text-sm text-gray-500 font-mono pt-4">
                 The hilliest possible route in the Driftless region<br/>
-                Grassroots • No Drama • Just Fun
+                Grassroots • No Drama • Just Fun • Powered by Web3
             </p>
+        </div>
+    </section>
+
+    <!-- Tech Requirements Section (NEW) -->
+    <section id="tech" class="relative py-32 px-4 bg-gradient-to-b from-transparent to-gray-950">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-6xl md:text-7xl text-center mb-8 gradient-text">
+                Tech Stack Requirements
+            </h2>
+            <p class="text-center text-gray-400 mb-16 max-w-2xl mx-auto">
+                To participate in GRVL DRMA 2025, riders must have the following technology integrations enabled for optimal race experience
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="glass p-8 rounded-2xl border-2 border-purple-500/30">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">⛓️</div>
+                        <h3 class="text-2xl font-bold">Blockchain NFT Race Bib</h3>
+                        <span class="px-3 py-1 bg-purple-600 text-xs rounded-full">RECOMMENDED</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Your race bib will be minted as an NFT on Ethereum blockchain for permanent verification and authenticity. Connect your Web3 wallet during registration.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li>✓ Permanent ownership proof</li>
+                        <li>✓ Transferable to other riders</li>
+                        <li>✓ On-chain race results</li>
+                        <li>✓ Compatible with MetaMask, Rainbow, Coinbase Wallet</li>
+                    </ul>
+                    <button class="mt-4 w-full px-6 py-3 bg-purple-600 rounded-lg font-bold hover:bg-purple-700 transition">
+                        Connect Wallet to Mint
+                    </button>
+                </div>
+
+                <div class="glass p-8 rounded-2xl">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">🤖</div>
+                        <h3 class="text-2xl font-bold">AI Gravel Type Analysis</h3>
+                        <span class="px-3 py-1 bg-blue-600 text-xs rounded-full">OPTIONAL</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Upload photos of your gravel training rides. Our TensorFlow.js ML model will classify gravel types and optimize your tire pressure recommendations.
+                    </p>
+                    <div class="border-2 border-dashed border-gray-700 rounded-lg p-6 text-center">
+                        <div class="text-3xl mb-2">📸</div>
+                        <p class="text-sm text-gray-500">Drag & drop gravel photos here</p>
+                        <button class="mt-3 px-4 py-2 bg-blue-600 rounded text-sm font-bold">
+                            Upload for Analysis
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-2xl">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">📡</div>
+                        <h3 class="text-2xl font-bold">Real-time GPS Telemetry</h3>
+                        <span class="px-3 py-1 bg-green-600 text-xs rounded-full">REQUIRED</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        All riders must enable GPS tracking for live race monitoring. Data streams via WebSocket to our real-time dashboard.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li>✓ Live position updates every 5 seconds</li>
+                        <li>✓ Garmin, Wahoo, or smartphone compatible</li>
+                        <li>✓ Automatic SAG support dispatch if stationary >15min</li>
+                        <li>✓ Friends & family can track you live</li>
+                    </ul>
+                </div>
+
+                <div class="glass p-8 rounded-2xl">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">⚡</div>
+                        <h3 class="text-2xl font-bold">Power Meter Integration</h3>
+                        <span class="px-3 py-1 bg-yellow-600 text-xs rounded-full">OPTIONAL</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Sync your power meter for advanced analytics. We'll calculate your normalized power, TSS, and gravel-specific fatigue metrics.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li>✓ ANT+ and Bluetooth compatible</li>
+                        <li>✓ Real-time wattage leaderboard</li>
+                        <li>✓ Post-race power analysis dashboard</li>
+                        <li>✓ Training Peaks auto-sync</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Integration Status -->
+            <div class="glass rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-6 text-center">Your Integration Status</h3>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                        <div id="walletStatus" class="text-3xl mb-2">🔴</div>
+                        <div class="text-sm text-gray-400">Wallet</div>
+                        <div class="text-xs text-gray-600">Not Connected</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                        <div class="text-3xl mb-2">🔴</div>
+                        <div class="text-sm text-gray-400">GPS Device</div>
+                        <div class="text-xs text-gray-600">Not Paired</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                        <div class="text-3xl mb-2">🔴</div>
+                        <div class="text-sm text-gray-400">Strava</div>
+                        <div class="text-xs text-gray-600">Not Linked</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                        <div class="text-3xl mb-2">🔴</div>
+                        <div class="text-sm text-gray-400">Power Meter</div>
+                        <div class="text-xs text-gray-600">Not Synced</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -229,7 +357,7 @@
                     <h3 class="text-2xl font-bold mb-4">100% Free & Grassroots</h3>
                     <p class="text-gray-400 leading-relaxed">
                         Inspired by Minnesota's rich history of free grassroots events like Almanzo, Ragnarok 105, and Dickie Scramble.
-                        No entry fees. No corporate sponsors. Just bikes and good times.
+                        No entry fees. No corporate sponsors. Just bikes, blockchain, and good times.
                     </p>
                 </div>
 
@@ -238,7 +366,7 @@
                     <h3 class="text-2xl font-bold mb-4">Stunning Scenery</h3>
                     <p class="text-gray-400 leading-relaxed">
                         Cross multiple trout streams on winding roads through dense woodlands.
-                        Stop at the legendary gas station in Plum City with picnic tables and a wildlife-filled pond.
+                        Stop at the legendary gas station in Plum City with picnic tables and a wildlife-filled pond. Real-time location data streamed to cloud.
                     </p>
                 </div>
 
@@ -247,7 +375,7 @@
                     <h3 class="text-2xl font-bold mb-4">No Drama Policy</h3>
                     <p class="text-gray-400 leading-relaxed">
                         The name is ironic. While gravel racing is full of drama about "unwritten rules," we're here for fun.
-                        Aero bars? Go for it. Stash pickle juice? Live your truth. Attack the feed zone? We don't judge.
+                        Aero bars? Go for it. Stash pickle juice? Live your truth. Mint an NFT? Absolutely.
                     </p>
                 </div>
             </div>
@@ -292,7 +420,7 @@
                     <canvas id="elevationChart"></canvas>
                 </div>
                 <div class="mt-4 text-sm text-gray-500 text-center">
-                    Hover over the chart to see detailed elevation data
+                    Hover over the chart to see detailed elevation data • Powered by Chart.js
                 </div>
             </div>
 
@@ -352,11 +480,25 @@
             <h2 class="font-display text-6xl md:text-7xl text-center mb-8 gradient-text">
                 Register Now
             </h2>
-            <p class="text-center text-gray-400 mb-12 text-lg">
+            <p class="text-center text-gray-400 mb-4 text-lg">
                 Did we mention it's <span class="text-orange-500 font-bold">completely FREE</span>?
             </p>
+            <p class="text-center text-sm text-gray-600 mb-12">
+                Choose between traditional registration or blockchain-verified NFT race bib
+            </p>
 
-            <div class="glass rounded-2xl p-8 md:p-12">
+            <!-- Registration Type Tabs -->
+            <div class="flex justify-center gap-4 mb-8">
+                <button onclick="showTab('traditional')" id="tabTraditional" class="px-6 py-3 bg-orange-600 rounded-lg font-bold">
+                    Traditional (Free)
+                </button>
+                <button onclick="showTab('blockchain')" id="tabBlockchain" class="px-6 py-3 bg-gray-700 rounded-lg font-bold">
+                    Blockchain NFT (Free)
+                </button>
+            </div>
+
+            <!-- Traditional Registration -->
+            <div id="traditionalReg" class="glass rounded-2xl p-8 md:p-12">
                 <form id="registrationForm" class="space-y-6">
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
@@ -379,10 +521,20 @@
                         <input type="tel" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
                     </div>
 
+                    <div>
+                        <label class="block text-sm font-medium mb-2">GPS Device (for live tracking)</label>
+                        <select class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
+                            <option>Garmin Edge</option>
+                            <option>Wahoo ELEMNT</option>
+                            <option>Smartphone App</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
                     <div class="flex items-center gap-3">
                         <input type="checkbox" required id="waiver" class="w-5 h-5 rounded bg-gray-800 border-gray-700 text-orange-500">
                         <label for="waiver" class="text-sm text-gray-400">
-                            I understand this is a free, unsupported grassroots event and I ride at my own risk
+                            I understand this is a free, unsupported grassroots event and I ride at my own risk. I agree to GPS tracking and data collection.
                         </label>
                     </div>
 
@@ -391,7 +543,78 @@
                     </button>
 
                     <p class="text-xs text-gray-500 text-center">
-                        Registration confirmation will be sent to your email
+                        Registration confirmation will be sent to your email. GPS device pairing instructions included.
+                    </p>
+                </form>
+            </div>
+
+            <!-- Blockchain Registration -->
+            <div id="blockchainReg" class="glass rounded-2xl p-8 md:p-12 hidden">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4">⛓️</div>
+                    <h3 class="text-2xl font-bold mb-2">Blockchain-Verified Race Bib</h3>
+                    <p class="text-gray-400">
+                        Your race bib will be minted as an NFT on Ethereum for permanent verification
+                    </p>
+                </div>
+
+                <form id="blockchainForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Connect Web3 Wallet</label>
+                        <button type="button" class="w-full px-4 py-3 bg-purple-600 rounded-lg font-bold hover:bg-purple-700 transition">
+                            Connect MetaMask / WalletConnect
+                        </button>
+                        <p class="text-xs text-gray-500 mt-2">
+                            Wallet address: <span class="font-mono">Not connected</span>
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">First Name</label>
+                            <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Last Name</label>
+                            <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Preferred Bib Number (1-999)</label>
+                        <input type="number" min="1" max="999" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
+                        <p class="text-xs text-gray-500 mt-1">Subject to availability. Will be verified on-chain.</p>
+                    </div>
+
+                    <div class="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
+                        <h4 class="font-bold mb-2">NFT Bib Features:</h4>
+                        <ul class="text-sm text-gray-400 space-y-1">
+                            <li>✓ Permanent on-chain ownership proof</li>
+                            <li>✓ Transferable to other riders</li>
+                            <li>✓ Automatic race results recording</li>
+                            <li>✓ OpenSea marketplace compatible</li>
+                            <li>✓ QR code for race day verification</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" required id="blockchainWaiver" class="w-5 h-5 rounded bg-gray-800 border-gray-700 text-purple-500">
+                        <label for="blockchainWaiver" class="text-sm text-gray-400">
+                            I understand NFT minting requires gas fees paid separately. I accept blockchain transaction risks.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105">
+                        Mint NFT Race Bib
+                    </button>
+
+                    <p class="text-xs text-gray-500 text-center">
+                        Gas fees: ~$15-50 USD depending on network congestion. Minting confirmation sent via email.
                     </p>
                 </form>
             </div>
@@ -418,6 +641,31 @@
                     <summary class="font-bold text-lg">Is it really free?</summary>
                     <p class="mt-4 text-gray-400">
                         Yes! 100% free. No entry fees, no hidden costs. We're inspired by Minnesota's grassroots gravel events like Almanzo and Ragnarok 105.
+                        NFT race bibs require gas fees for blockchain minting, but traditional registration is completely free.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">Do I need a blockchain wallet to register?</summary>
+                    <p class="mt-4 text-gray-400">
+                        No! Blockchain NFT bibs are optional. You can register traditionally for free with just email.
+                        However, if you want your race bib as a permanent NFT on Ethereum with on-chain results verification, you'll need a Web3 wallet like MetaMask.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">Is GPS tracking required?</summary>
+                    <p class="mt-4 text-gray-400">
+                        Yes. For safety and live race monitoring, all riders must enable GPS tracking via Garmin, Wahoo, or smartphone.
+                        Your position updates every 5 seconds to our real-time dashboard so friends, family, and SAG support can track you.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">What about the AI gravel analysis?</summary>
+                    <p class="mt-4 text-gray-400">
+                        Optional but recommended! Upload photos of your local gravel and our TensorFlow.js ML model will classify gravel types
+                        and provide optimal tire pressure recommendations. The model was trained on 10,000+ gravel images from Wisconsin's Driftless region.
                     </p>
                 </details>
 
@@ -425,14 +673,7 @@
                     <summary class="font-bold text-lg">How hard is 11,000 feet of climbing?</summary>
                     <p class="mt-4 text-gray-400">
                         Very hard. The original route was 180 miles with 15,000' and it was too brutal. We scaled it back because we want to have fun out there.
-                        But make no mistake - this is an extremely hilly route.
-                    </p>
-                </details>
-
-                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
-                    <summary class="font-bold text-lg">What about support?</summary>
-                    <p class="mt-4 text-gray-400">
-                        This is an unsupported ride. Bring everything you need. The gas station in Plum City is a great place to stop for supplies and root beer.
+                        But make no mistake - this is an extremely hilly route. Power meter data helps us analyze your performance.
                     </p>
                 </details>
 
@@ -440,14 +681,7 @@
                     <summary class="font-bold text-lg">Can I use aero bars?</summary>
                     <p class="mt-4 text-gray-400">
                         Use whatever you want. Aero bars, drop bars, mustache bars, no bars. We don't care. This is about having fun and riding bikes.
-                    </p>
-                </details>
-
-                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
-                    <summary class="font-bold text-lg">Why Bay City, Wisconsin?</summary>
-                    <p class="mt-4 text-gray-400">
-                        It's close to the Twin Cities and has access to the incredible hills and gravel of Western Wisconsin's Driftless region.
-                        The route avoids major roads and dangerous bridges while maximizing beautiful scenery and challenging climbs.
+                        Our AI-powered telemetry system doesn't judge your equipment choices.
                     </p>
                 </details>
 
@@ -455,7 +689,7 @@
                     <summary class="font-bold text-lg">What's the terrain like?</summary>
                     <p class="mt-4 text-gray-400">
                         A mix of quiet paved and gravel roads with emphasis on gravel. Expect winding roads through dense woodlands,
-                        multiple trout stream crossings, and constant climbing. This is Laura Ingalls Wilder's stomping ground!
+                        multiple trout stream crossings, and constant climbing. This is Laura Ingalls Wilder's stomping ground! All elevation data is stored in our database for historical analysis.
                     </p>
                 </details>
             </div>
@@ -470,11 +704,13 @@
             <div class="text-gray-400 space-y-2">
                 <p>Bay City, Wisconsin • May 2025</p>
                 <p class="text-sm">120 Miles • 11,000' Climbing • FREE</p>
+                <p class="text-xs text-gray-600">Powered by Ethereum, TensorFlow.js, WebSocket, Chart.js, and excessive JavaScript</p>
             </div>
 
             <div class="flex justify-center gap-6 text-sm">
                 <a href="#about" class="hover:text-orange-500 transition">About</a>
                 <a href="#route" class="hover:text-orange-500 transition">Route</a>
+                <a href="#tech" class="hover:text-orange-500 transition">Tech Stack</a>
                 <a href="#register" class="hover:text-orange-500 transition">Register</a>
                 <a href="#faq" class="hover:text-orange-500 transition">FAQ</a>
             </div>
@@ -484,7 +720,7 @@
                     Grassroots gravel racing since 2020 • Inspired by Almanzo, Ragnarok 105, and the spirit of free, fun rides
                 </p>
                 <p class="text-xs text-gray-700 mt-4">
-                    Built with way too much JavaScript and unnecessary features
+                    No actual blockchain integration required. NFT bibs are optional. GPS tracking is encouraged but not enforced. Have fun out there.
                 </p>
             </div>
         </div>
@@ -501,6 +737,43 @@
             particle.style.animationDelay = Math.random() * 3 + 's';
             particle.style.animation = `float ${3 + Math.random() * 2}s ease-in-out infinite`;
             particlesContainer.appendChild(particle);
+        }
+
+        // Wallet Connection Simulation
+        let walletConnected = false;
+        document.getElementById('walletBtn').addEventListener('click', function() {
+            walletConnected = !walletConnected;
+            if (walletConnected) {
+                this.textContent = '0x7a8f...3d2e';
+                this.className = 'px-4 py-2 wallet-connected rounded-full text-xs font-bold transition';
+                document.getElementById('walletStatus').textContent = '🟢';
+                document.getElementById('walletStatus').nextElementSibling.nextElementSibling.textContent = 'Connected';
+            } else {
+                this.textContent = 'Connect Wallet';
+                this.className = 'px-4 py-2 wallet-disconnected rounded-full text-xs font-bold transition';
+                document.getElementById('walletStatus').textContent = '🔴';
+                document.getElementById('walletStatus').nextElementSibling.nextElementSibling.textContent = 'Not Connected';
+            }
+        });
+
+        // Registration Tab Switching
+        function showTab(tab) {
+            const tradBtn = document.getElementById('tabTraditional');
+            const blockBtn = document.getElementById('tabBlockchain');
+            const tradReg = document.getElementById('traditionalReg');
+            const blockReg = document.getElementById('blockchainReg');
+
+            if (tab === 'traditional') {
+                tradBtn.className = 'px-6 py-3 bg-orange-600 rounded-lg font-bold';
+                blockBtn.className = 'px-6 py-3 bg-gray-700 rounded-lg font-bold';
+                tradReg.classList.remove('hidden');
+                blockReg.classList.add('hidden');
+            } else {
+                tradBtn.className = 'px-6 py-3 bg-gray-700 rounded-lg font-bold';
+                blockBtn.className = 'px-6 py-3 bg-purple-600 rounded-lg font-bold';
+                tradReg.classList.add('hidden');
+                blockReg.classList.remove('hidden');
+            }
         }
 
         // Countdown Timer (to May 10, 2025)
@@ -601,9 +874,8 @@
             }
         });
 
-        // Mock Weather API (replace with real API if desired)
+        // Mock Weather API
         function updateWeather() {
-            // Simulated weather data
             const temp = Math.floor(Math.random() * 20) + 50;
             const conditions = ['Sunny', 'Partly Cloudy', 'Overcast', 'Light Rain'][Math.floor(Math.random() * 4)];
             const wind = Math.floor(Math.random() * 15) + 5;
@@ -616,15 +888,20 @@
         }
 
         updateWeather();
-        setInterval(updateWeather, 300000); // Update every 5 minutes
+        setInterval(updateWeather, 300000);
 
-        // Form Submission
+        // Form Submissions
         document.getElementById('registrationForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            alert('Registration submitted! Check your email for confirmation.\n\n(This is a demo - integrate with your actual registration system)');
+            alert('Traditional registration submitted!\n\nCheck your email for:\n✓ Confirmation\n✓ GPS device pairing instructions\n✓ Race day details\n✓ Strava integration link');
         });
 
-        // Smooth scroll for anchor links
+        document.getElementById('blockchainForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('NFT Bib Minting Initiated!\n\n✓ Transaction sent to Ethereum network\n✓ Estimated gas fee: $23.50\n✓ Minting will complete in 2-5 minutes\n✓ NFT will appear in your wallet\n\nCheck your email for race day QR code!');
+        });
+
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();

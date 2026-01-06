@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GRVL DRMA - The Most Over-Engineered Gravel Race</title>
+    <title>GRVL DRMA - 120 Miles, 11,000' of Climbing | Bay City, Wisconsin</title>
+    <meta name="description" content="Free grassroots gravel race in the Driftless region of Wisconsin. 120 miles, 11,000 feet of climbing through the hilliest possible route.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         .font-display { font-family: 'Bebas Neue', Impact, sans-serif; letter-spacing: 0.05em; }
 
@@ -28,15 +33,40 @@
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
 
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .animate-float { animation: float 3s ease-in-out infinite; }
         .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
         .animate-gravel-shake:hover { animation: gravel-shake 0.5s ease-in-out; }
+        .animate-fade-in { animation: fadeIn 1s ease-out; }
+        .animate-slide-in-left { animation: slideInLeft 0.8s ease-out; }
+        .animate-slide-in-right { animation: slideInRight 0.8s ease-out; }
 
         .gradient-text {
             background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FDC830 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         #particles {
@@ -56,179 +86,412 @@
             background: rgba(156, 136, 114, 0.4);
             border-radius: 50%;
         }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .elevation-chart {
+            position: relative;
+            height: 300px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(12px);
+            background: rgba(15, 15, 15, 0.8);
+        }
+
+        @keyframes countdown-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .countdown-pulse {
+            animation: countdown-pulse 2s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-b from-gray-950 to-gray-900 text-gray-100 min-h-screen">
     <!-- Particle Background -->
     <div id="particles"></div>
 
-    <!-- Main Content -->
-    <div class="relative z-10">
-        <!-- Hero Section -->
-        <section class="min-h-screen flex items-center justify-center px-4 relative">
-            <div class="absolute top-4 right-4 flex gap-2 bg-gray-900/80 backdrop-blur-sm rounded-full p-2 border border-gray-700">
-                <button onclick="setTheme('light')" class="px-4 py-2 rounded-full text-sm hover:bg-orange-600 hover:text-white transition">☀️ Light</button>
-                <button onclick="setTheme('dark')" class="px-4 py-2 rounded-full text-sm bg-gradient-to-r from-orange-600 to-orange-500 text-white">🌙 Dark</button>
-                <button onclick="setTheme('gravel')" class="px-4 py-2 rounded-full text-sm hover:bg-gray-700 hover:text-white transition">🪨 Gravel</button>
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav py-4 px-6">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="font-display text-3xl gradient-text">GRVL DRMA</div>
+            <div class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="#about" class="hover:text-orange-500 transition">About</a>
+                <a href="#route" class="hover:text-orange-500 transition">Route</a>
+                <a href="#register" class="hover:text-orange-500 transition">Register</a>
+                <a href="#faq" class="hover:text-orange-500 transition">FAQ</a>
+            </div>
+            <a href="#register" class="px-4 py-2 bg-gradient-to-r from-orange-600 to-orange-500 rounded-full text-sm font-bold hover:scale-105 transition">
+                Register FREE
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 pt-20">
+        <div class="relative z-10 text-center space-y-8 max-w-6xl mx-auto">
+            <div class="space-y-4 animate-float">
+                <h1 class="font-display text-7xl md:text-9xl lg:text-[10rem] font-bold tracking-tighter gradient-text animate-pulse-slow">
+                    GRVL DRMA
+                </h1>
+                <p class="text-xl md:text-3xl font-mono text-gray-400">
+                    Bay City, Wisconsin • May 2025
+                </p>
+                <div class="flex items-center justify-center gap-8 text-3xl md:text-5xl font-bold pt-4">
+                    <div class="text-center">
+                        <div class="gradient-text">120</div>
+                        <div class="text-sm text-gray-500">MILES</div>
+                    </div>
+                    <div class="text-gray-600">•</div>
+                    <div class="text-center">
+                        <div class="gradient-text">11,000'</div>
+                        <div class="text-sm text-gray-500">CLIMBING</div>
+                    </div>
+                    <div class="text-gray-600">•</div>
+                    <div class="text-center">
+                        <div class="gradient-text">FREE</div>
+                        <div class="text-sm text-gray-500">ENTRY</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="text-center space-y-8 max-w-6xl mx-auto">
-                <div class="space-y-4 animate-float">
-                    <h1 class="font-display text-8xl md:text-9xl lg:text-[12rem] font-bold tracking-tighter gradient-text animate-pulse-slow">
-                        GRVL DRMA
-                    </h1>
-                    <p class="text-2xl md:text-4xl font-mono text-gray-400">
-                        The Most <span class="line-through text-gray-600">Unnecessary</span>
-                        <span class="text-orange-500 font-bold">Over-Engineered</span> Gravel Race Website
+            <!-- Live Countdown Timer -->
+            <div id="countdown" class="glass rounded-2xl p-8 max-w-4xl mx-auto countdown-pulse">
+                <div class="text-sm text-gray-400 mb-4">RACE DAY COUNTDOWN</div>
+                <div class="grid grid-cols-4 gap-4 text-center">
+                    <div>
+                        <div id="days" class="text-5xl font-bold gradient-text">--</div>
+                        <div class="text-xs text-gray-500 mt-2">DAYS</div>
+                    </div>
+                    <div>
+                        <div id="hours" class="text-5xl font-bold gradient-text">--</div>
+                        <div class="text-xs text-gray-500 mt-2">HOURS</div>
+                    </div>
+                    <div>
+                        <div id="minutes" class="text-5xl font-bold gradient-text">--</div>
+                        <div class="text-xs text-gray-500 mt-2">MINUTES</div>
+                    </div>
+                    <div>
+                        <div id="seconds" class="text-5xl font-bold gradient-text">--</div>
+                        <div class="text-xs text-gray-500 mt-2">SECONDS</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4 pt-8">
+                <a href="#register" class="px-8 py-4 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105">
+                    Register Now (It's FREE!)
+                </a>
+                <a href="#route" class="px-8 py-4 bg-gray-800 text-gray-100 font-bold text-lg rounded-full border-2 border-gray-600 hover:bg-gray-700 transition-all hover:scale-105">
+                    View Route Details
+                </a>
+            </div>
+
+            <p class="text-sm text-gray-500 font-mono pt-4">
+                The hilliest possible route in the Driftless region<br/>
+                Grassroots • No Drama • Just Fun
+            </p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="relative py-32 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-6xl md:text-7xl text-center mb-16 gradient-text">
+                What is GRVL DRMA?
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-12 mb-16">
+                <div class="glass p-8 rounded-2xl animate-slide-in-left">
+                    <div class="text-5xl mb-4">🏔️</div>
+                    <h3 class="text-2xl font-bold mb-4">The Hilliest Possible Route</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Tired of flat, windy gravel races? We found the hilliest possible route within an easy drive of the Twin Cities.
+                        11,000 feet of climbing in 120 miles through Wisconsin's stunning Driftless region.
                     </p>
                 </div>
 
-                <div class="space-y-4">
-                    <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                        Featuring <span class="font-bold text-orange-400">blockchain-verified digital race bibs</span>,
-                        <span class="font-bold text-yellow-400">AI-powered gravel analysis</span>,
-                        <span class="font-bold text-cyan-400">real-time 3D telemetry</span>, and approximately
-                        <span class="font-mono text-blue-400">47 other features</span> that absolutely nobody asked for.
-                    </p>
-
-                    <div class="flex flex-wrap items-center justify-center gap-4 pt-8">
-                        <button class="px-8 py-4 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105">
-                            Register (Blockchain Required)
-                        </button>
-                        <button class="px-8 py-4 bg-gray-800 text-gray-100 font-bold text-lg rounded-full border-2 border-gray-600 hover:bg-gray-700 transition-all hover:scale-105">
-                            View Unnecessary Tech Stack
-                        </button>
-                    </div>
-
-                    <p class="text-sm text-gray-500 font-mono pt-4">
-                        Press <kbd class="px-2 py-1 bg-gray-800 border border-gray-600 rounded">⌘K</kbd> to open command palette
-                        <span class="text-xs block mt-1">(because of course we have one)</span>
+                <div class="glass p-8 rounded-2xl animate-slide-in-right">
+                    <div class="text-5xl mb-4">🆓</div>
+                    <h3 class="text-2xl font-bold mb-4">100% Free & Grassroots</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Inspired by Minnesota's rich history of free grassroots events like Almanzo, Ragnarok 105, and Dickie Scramble.
+                        No entry fees. No corporate sponsors. Just bikes and good times.
                     </p>
                 </div>
+
+                <div class="glass p-8 rounded-2xl animate-slide-in-left">
+                    <div class="text-5xl mb-4">🌲</div>
+                    <h3 class="text-2xl font-bold mb-4">Stunning Scenery</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Cross multiple trout streams on winding roads through dense woodlands.
+                        Stop at the legendary gas station in Plum City with picnic tables and a wildlife-filled pond.
+                    </p>
+                </div>
+
+                <div class="glass p-8 rounded-2xl animate-slide-in-right">
+                    <div class="text-5xl mb-4">😎</div>
+                    <h3 class="text-2xl font-bold mb-4">No Drama Policy</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        The name is ironic. While gravel racing is full of drama about "unwritten rules," we're here for fun.
+                        Aero bars? Go for it. Stash pickle juice? Live your truth. Attack the feed zone? We don't judge.
+                    </p>
+                </div>
             </div>
-        </section>
 
-        <!-- Features Section -->
-        <section class="py-32 px-4 bg-gradient-to-b from-transparent via-gray-950/50 to-gray-950">
-            <div class="max-w-7xl mx-auto space-y-16">
-                <h2 class="font-display text-6xl md:text-7xl text-center mb-16 text-gray-100">
-                    Unnecessary Features
-                </h2>
+            <!-- Stats Counter -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-4xl gradient-text font-bold" data-counter="120">0</div>
+                    <div class="text-sm text-gray-500 mt-2">Total Miles</div>
+                </div>
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-4xl gradient-text font-bold" data-counter="11000">0</div>
+                    <div class="text-sm text-gray-500 mt-2">Feet of Climbing</div>
+                </div>
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-4xl gradient-text font-bold" data-counter="3">0</div>
+                    <div class="text-sm text-gray-500 mt-2">Years Running</div>
+                </div>
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-4xl gradient-text font-bold" data-counter="0">0</div>
+                    <div class="text-sm text-gray-500 mt-2">Entry Fee ($)</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Feature Cards -->
-                    <div class="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800 hover:border-orange-600 transition-all cursor-pointer animate-gravel-shake">
-                        <div class="text-5xl mb-4">⛓️</div>
-                        <h3 class="text-xl font-bold text-gray-100 mb-2">Blockchain Race Bibs</h3>
-                        <p class="text-gray-400 text-sm mb-4">Your bib number is an NFT on the Ethereum blockchain because why not.</p>
-                        <span class="text-xs font-bold font-mono text-purple-500">ABSURDITY: EXTREME</span>
+    <!-- Elevation Profile Section -->
+    <section id="route" class="relative py-32 px-4 bg-gradient-to-b from-transparent to-gray-950">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-6xl md:text-7xl text-center mb-8 gradient-text">
+                The Route
+            </h2>
+            <p class="text-center text-gray-400 mb-16 max-w-2xl mx-auto">
+                A mix of quiet paved and gravel roads with an emphasis on gravel.
+                Starting in Bay City, Wisconsin, the route winds through the Driftless region's most challenging terrain.
+            </p>
+
+            <!-- Elevation Chart -->
+            <div class="glass rounded-2xl p-8 mb-12">
+                <h3 class="text-2xl font-bold mb-6">Interactive Elevation Profile</h3>
+                <div class="elevation-chart">
+                    <canvas id="elevationChart"></canvas>
+                </div>
+                <div class="mt-4 text-sm text-gray-500 text-center">
+                    Hover over the chart to see detailed elevation data
+                </div>
+            </div>
+
+            <!-- Route Highlights -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass p-6 rounded-xl">
+                    <div class="text-3xl mb-3">🌊</div>
+                    <h4 class="font-bold text-lg mb-2">Trout Streams</h4>
+                    <p class="text-sm text-gray-400">
+                        Cross several pristine trout streams on winding roads through dense woodlands
+                    </p>
+                </div>
+                <div class="glass p-6 rounded-xl">
+                    <div class="text-3xl mb-3">⛽</div>
+                    <h4 class="font-bold text-lg mb-2">Plum City Stop</h4>
+                    <p class="text-sm text-gray-400">
+                        Gas station with shelter, picnic tables, and a wildlife pond - perfect for root beer breaks
+                    </p>
+                </div>
+                <div class="glass p-6 rounded-xl">
+                    <div class="text-3xl mb-3">🛣️</div>
+                    <h4 class="font-bold text-lg mb-2">No Major Roads</h4>
+                    <p class="text-sm text-gray-400">
+                        Route redesigned to avoid dangerous bridges and high-traffic roads
+                    </p>
+                </div>
+            </div>
+
+            <!-- Live Weather Widget -->
+            <div class="glass rounded-2xl p-8 mt-12">
+                <h3 class="text-2xl font-bold mb-6">Current Weather in Bay City, WI</h3>
+                <div id="weather" class="grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="text-sm text-gray-500">Temperature</div>
+                        <div id="temp" class="text-3xl font-bold gradient-text">--°F</div>
                     </div>
-
-                    <div class="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800 hover:border-orange-600 transition-all cursor-pointer animate-gravel-shake">
-                        <div class="text-5xl mb-4">🧠</div>
-                        <h3 class="text-xl font-bold text-gray-100 mb-2">AI Gravel Classifier</h3>
-                        <p class="text-gray-400 text-sm mb-4">TensorFlow.js powered ML model that identifies types of gravel. Yes, really.</p>
-                        <span class="text-xs font-bold font-mono text-purple-500">ABSURDITY: EXTREME</span>
+                    <div>
+                        <div class="text-sm text-gray-500">Conditions</div>
+                        <div id="conditions" class="text-lg text-gray-300">Loading...</div>
                     </div>
-
-                    <div class="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800 hover:border-orange-600 transition-all cursor-pointer animate-gravel-shake">
-                        <div class="text-5xl mb-4">🎮</div>
-                        <h3 class="text-xl font-bold text-gray-100 mb-2">Real-time 3D Telemetry</h3>
-                        <p class="text-gray-400 text-sm mb-4">WebGL-powered live race tracking with particle effects and shaders.</p>
-                        <span class="text-xs font-bold font-mono text-red-500">ABSURDITY: VERY HIGH</span>
+                    <div>
+                        <div class="text-sm text-gray-500">Wind</div>
+                        <div id="wind" class="text-lg text-gray-300">-- mph</div>
                     </div>
-
-                    <div class="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800 hover:border-orange-600 transition-all cursor-pointer animate-gravel-shake">
-                        <div class="text-5xl mb-4">🗺️</div>
-                        <h3 class="text-xl font-bold text-gray-100 mb-2">3D Terrain Visualization</h3>
-                        <p class="text-gray-400 text-sm mb-4">Three.js rendered course map with elevation data and dynamic lighting.</p>
-                        <span class="text-xs font-bold font-mono text-orange-500">ABSURDITY: HIGH</span>
-                    </div>
-
-                    <div class="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800 hover:border-orange-600 transition-all cursor-pointer animate-gravel-shake">
-                        <div class="text-5xl mb-4">📊</div>
-                        <h3 class="text-xl font-bold text-gray-100 mb-2">GraphQL + tRPC APIs</h3>
-                        <p class="text-gray-400 text-sm mb-4">Both. At the same time. For a static website.</p>
-                        <span class="text-xs font-bold font-mono text-pink-500">ABSURDITY: MAXIMUM</span>
-                    </div>
-
-                    <div class="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800 hover:border-orange-600 transition-all cursor-pointer animate-gravel-shake">
-                        <div class="text-5xl mb-4">🐳</div>
-                        <h3 class="text-xl font-bold text-gray-100 mb-2">Kubernetes Deployment</h3>
-                        <p class="text-gray-400 text-sm mb-4">Full K8s setup with auto-scaling for your gravel bike race website.</p>
-                        <span class="text-xs font-bold font-mono text-purple-500">ABSURDITY: EXTREME</span>
+                    <div>
+                        <div class="text-sm text-gray-500">Humidity</div>
+                        <div id="humidity" class="text-lg text-gray-300">--%</div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Live Stats -->
-        <section class="py-32 px-4">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="font-display text-6xl md:text-7xl text-center mb-16 text-gray-100">
-                    Overly Detailed Statistics
-                </h2>
+    <!-- Registration Section -->
+    <section id="register" class="relative py-32 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-display text-6xl md:text-7xl text-center mb-8 gradient-text">
+                Register Now
+            </h2>
+            <p class="text-center text-gray-400 mb-12 text-lg">
+                Did we mention it's <span class="text-orange-500 font-bold">completely FREE</span>?
+            </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="p-6 bg-gray-900 rounded-xl border border-gray-800">
-                        <div class="text-5xl mb-3">🚴</div>
-                        <div class="text-gray-400 text-sm mb-2">Total Registrations</div>
-                        <div class="text-4xl font-bold font-mono bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent" id="stat1">1337</div>
+            <div class="glass rounded-2xl p-8 md:p-12">
+                <form id="registrationForm" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">First Name</label>
+                            <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Last Name</label>
+                            <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
+                        </div>
                     </div>
 
-                    <div class="p-6 bg-gray-900 rounded-xl border border-gray-800">
-                        <div class="text-5xl mb-3">🪨</div>
-                        <div class="text-gray-400 text-sm mb-2">Gravel Pieces Analyzed</div>
-                        <div class="text-4xl font-bold font-mono bg-gradient-to-r from-gray-600 to-gray-400 bg-clip-text text-transparent" id="stat2">9001</div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
                     </div>
 
-                    <div class="p-6 bg-gray-900 rounded-xl border border-gray-800">
-                        <div class="text-5xl mb-3">⛓️</div>
-                        <div class="text-gray-400 text-sm mb-2">NFTs Minted</div>
-                        <div class="text-4xl font-bold font-mono bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" id="stat3">420</div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Emergency Contact</label>
+                        <input type="tel" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
                     </div>
 
-                    <div class="p-6 bg-gray-900 rounded-xl border border-gray-800">
-                        <div class="text-5xl mb-3">💻</div>
-                        <div class="text-gray-400 text-sm mb-2">Lines of Code</div>
-                        <div class="text-4xl font-bold font-mono bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent" id="stat4">50,000</div>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" required id="waiver" class="w-5 h-5 rounded bg-gray-800 border-gray-700 text-orange-500">
+                        <label for="waiver" class="text-sm text-gray-400">
+                            I understand this is a free, unsupported grassroots event and I ride at my own risk
+                        </label>
                     </div>
-                </div>
+
+                    <button type="submit" class="w-full px-8 py-4 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105">
+                        Complete Registration
+                    </button>
+
+                    <p class="text-xs text-gray-500 text-center">
+                        Registration confirmation will be sent to your email
+                    </p>
+                </form>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Footer -->
-        <footer class="bg-gray-950 border-t border-gray-800 py-16 px-4">
-            <div class="max-w-7xl mx-auto text-center space-y-8">
-                <h3 class="font-display text-4xl text-gray-100">
-                    Built with an absolutely ridiculous tech stack
-                </h3>
-                <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-400 font-mono">
-                    <span>Next.js 14</span><span>•</span>
-                    <span>React 18</span><span>•</span>
-                    <span>TypeScript</span><span>•</span>
-                    <span>Three.js</span><span>•</span>
-                    <span>TensorFlow.js</span><span>•</span>
-                    <span>Web3</span><span>•</span>
-                    <span>tRPC</span><span>•</span>
-                    <span>GraphQL</span><span>•</span>
-                    <span>Prisma</span><span>•</span>
-                    <span>PostgreSQL</span><span>•</span>
-                    <span>Redis</span><span>•</span>
-                    <span>WebSockets</span><span>•</span>
-                    <span>Docker</span><span>•</span>
-                    <span>Kubernetes</span><span>•</span>
-                    <span>and 47 other dependencies</span>
-                </div>
-                <p class="text-gray-500 text-sm">
-                    © 2024 GRVL DRMA. Over-engineered with ❤️ and way too much free time.
+    <!-- FAQ Section -->
+    <section id="faq" class="relative py-32 px-4 bg-gradient-to-b from-gray-950 to-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-display text-6xl md:text-7xl text-center mb-16 gradient-text">
+                FAQ
+            </h2>
+
+            <div class="space-y-4">
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">Why is it called GRVL DRMA?</summary>
+                    <p class="mt-4 text-gray-400">
+                        Gravel racing is full of drama about "unwritten rules" - attacking in the feed zone, stashing pickle juice, using aero bars.
+                        The name is an homage to that drama, but we're actually drama-free. Also, bike racing is allergic to vowels.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">Is it really free?</summary>
+                    <p class="mt-4 text-gray-400">
+                        Yes! 100% free. No entry fees, no hidden costs. We're inspired by Minnesota's grassroots gravel events like Almanzo and Ragnarok 105.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">How hard is 11,000 feet of climbing?</summary>
+                    <p class="mt-4 text-gray-400">
+                        Very hard. The original route was 180 miles with 15,000' and it was too brutal. We scaled it back because we want to have fun out there.
+                        But make no mistake - this is an extremely hilly route.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">What about support?</summary>
+                    <p class="mt-4 text-gray-400">
+                        This is an unsupported ride. Bring everything you need. The gas station in Plum City is a great place to stop for supplies and root beer.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">Can I use aero bars?</summary>
+                    <p class="mt-4 text-gray-400">
+                        Use whatever you want. Aero bars, drop bars, mustache bars, no bars. We don't care. This is about having fun and riding bikes.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">Why Bay City, Wisconsin?</summary>
+                    <p class="mt-4 text-gray-400">
+                        It's close to the Twin Cities and has access to the incredible hills and gravel of Western Wisconsin's Driftless region.
+                        The route avoids major roads and dangerous bridges while maximizing beautiful scenery and challenging climbs.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">What's the terrain like?</summary>
+                    <p class="mt-4 text-gray-400">
+                        A mix of quiet paved and gravel roads with emphasis on gravel. Expect winding roads through dense woodlands,
+                        multiple trout stream crossings, and constant climbing. This is Laura Ingalls Wilder's stomping ground!
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative bg-gray-950 border-t border-gray-800 py-16 px-4">
+        <div class="max-w-7xl mx-auto text-center space-y-8">
+            <div class="font-display text-5xl gradient-text mb-4">GRVL DRMA</div>
+
+            <div class="text-gray-400 space-y-2">
+                <p>Bay City, Wisconsin • May 2025</p>
+                <p class="text-sm">120 Miles • 11,000' Climbing • FREE</p>
+            </div>
+
+            <div class="flex justify-center gap-6 text-sm">
+                <a href="#about" class="hover:text-orange-500 transition">About</a>
+                <a href="#route" class="hover:text-orange-500 transition">Route</a>
+                <a href="#register" class="hover:text-orange-500 transition">Register</a>
+                <a href="#faq" class="hover:text-orange-500 transition">FAQ</a>
+            </div>
+
+            <div class="pt-8 border-t border-gray-800">
+                <p class="text-sm text-gray-600">
+                    Grassroots gravel racing since 2020 • Inspired by Almanzo, Ragnarok 105, and the spirit of free, fun rides
+                </p>
+                <p class="text-xs text-gray-700 mt-4">
+                    Built with way too much JavaScript and unnecessary features
                 </p>
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <script>
-        // Create floating particles
+        // Particle System
         const particlesContainer = document.getElementById('particles');
         for (let i = 0; i < 50; i++) {
             const particle = document.createElement('div');
@@ -240,11 +503,33 @@
             particlesContainer.appendChild(particle);
         }
 
-        // Animate counters
-        function animateCounter(id, target) {
-            const element = document.getElementById(id);
+        // Countdown Timer (to May 10, 2025)
+        function updateCountdown() {
+            const raceDate = new Date('2025-05-10T07:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = raceDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Animated Counter
+        function animateCounter(element) {
+            const target = parseInt(element.getAttribute('data-counter'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
             let current = 0;
-            const increment = target / 50;
+
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
@@ -253,21 +538,102 @@
                 } else {
                     element.textContent = Math.floor(current).toLocaleString();
                 }
-            }, 30);
+            }, 16);
         }
 
-        // Start counter animations when page loads
-        window.addEventListener('load', () => {
-            animateCounter('stat1', 1337);
-            animateCounter('stat2', 9001);
-            animateCounter('stat3', 420);
-            animateCounter('stat4', 50000);
+        // Intersection Observer for counters
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('[data-counter]').forEach(el => {
+            counterObserver.observe(el);
         });
 
-        function setTheme(theme) {
-            console.log('Theme changed to:', theme);
-            // Theme switching would be implemented here
+        // Elevation Chart
+        const ctx = document.getElementById('elevationChart').getContext('2d');
+        const elevationData = [];
+        for (let i = 0; i <= 120; i++) {
+            const base = 700 + Math.sin(i / 10) * 200;
+            const noise = Math.random() * 100;
+            elevationData.push(base + noise);
         }
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 121}, (_, i) => i),
+                datasets: [{
+                    label: 'Elevation (ft)',
+                    data: elevationData,
+                    borderColor: '#FF6B35',
+                    backgroundColor: 'rgba(255, 107, 53, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `${Math.round(context.parsed.y)}ft at mile ${context.parsed.x}`
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Miles' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    y: {
+                        title: { display: true, text: 'Elevation (ft)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            }
+        });
+
+        // Mock Weather API (replace with real API if desired)
+        function updateWeather() {
+            // Simulated weather data
+            const temp = Math.floor(Math.random() * 20) + 50;
+            const conditions = ['Sunny', 'Partly Cloudy', 'Overcast', 'Light Rain'][Math.floor(Math.random() * 4)];
+            const wind = Math.floor(Math.random() * 15) + 5;
+            const humidity = Math.floor(Math.random() * 30) + 40;
+
+            document.getElementById('temp').textContent = temp + '°F';
+            document.getElementById('conditions').textContent = conditions;
+            document.getElementById('wind').textContent = wind + ' mph';
+            document.getElementById('humidity').textContent = humidity + '%';
+        }
+
+        updateWeather();
+        setInterval(updateWeather, 300000); // Update every 5 minutes
+
+        // Form Submission
+        document.getElementById('registrationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Registration submitted! Check your email for confirmation.\n\n(This is a demo - integrate with your actual registration system)');
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     </script>
 </body>
 </html>

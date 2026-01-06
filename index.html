@@ -236,27 +236,32 @@
                 <div class="glass p-8 rounded-2xl border-2 border-green-500/40 bg-gradient-to-br from-purple-900/20 to-green-900/20">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="text-4xl">⛓️</div>
-                        <h3 class="text-2xl font-bold">Blockchain NFT Race Bib</h3>
+                        <h3 class="text-2xl font-bold">Self-Custody Wallet + NFT Bib</h3>
                         <span class="px-3 py-1 bg-green-600 text-xs rounded-full font-bold">REQUIRED</span>
                     </div>
                     <div class="bg-yellow-900/30 border border-yellow-500/40 rounded-lg p-3 mb-4">
-                        <p class="text-sm font-bold text-yellow-300">💰 Includes 0.0025 ETH participation reward (~$5 USD)</p>
+                        <p class="text-sm font-bold text-yellow-300">💰 We pay YOU 0.0025 ETH (~$5 USD) to ride!</p>
+                        <p class="text-xs text-gray-400 mt-1">Self-custody wallet required to receive payment</p>
                     </div>
                     <p class="text-gray-400 mb-4">
-                        All race bibs are NFTs minted on Ethereum blockchain for permanent verification. Connect your Web3 wallet during registration to receive your bib + participation reward.
+                        All race bibs are NFTs minted on Ethereum blockchain. Connect your self-custody wallet during registration to receive your bib + participation reward payment.
                     </p>
+                    <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-3 mb-3">
+                        <p class="text-xs font-bold text-red-300">🚫 No Exchange Wallets</p>
+                        <p class="text-xs text-gray-400">Coinbase, Binance, Kraken NOT accepted</p>
+                    </div>
                     <ul class="space-y-2 text-sm text-gray-400">
                         <li>✓ Permanent ownership proof</li>
                         <li>✓ Transferable to other riders</li>
                         <li>✓ On-chain race results</li>
-                        <li>✓ Automatic participation reward airdrop</li>
-                        <li>✓ Compatible with MetaMask, Rainbow, Coinbase Wallet</li>
+                        <li>✓ Automatic participation payment airdrop</li>
+                        <li>✓ MetaMask, Rainbow, Ledger, Trezor only</li>
                     </ul>
                     <p class="mt-4 text-xs text-gray-500">
-                        Gas fees: $15-50 USD (higher than reward, but you keep the NFT!)
+                        Gas fees: $15-50 USD (higher than $5 payment, but you keep the NFT!)
                     </p>
                     <button onclick="document.getElementById('register').scrollIntoView({behavior: 'smooth'})" class="mt-4 w-full px-6 py-3 bg-green-600 rounded-lg font-bold hover:bg-green-700 transition">
-                        Register Now (Required)
+                        Register & Get Paid
                     </button>
                 </div>
 
@@ -491,10 +496,13 @@
                 Did we mention it's <span class="text-orange-500 font-bold">completely FREE</span>?
             </p>
             <p class="text-center text-xl font-bold text-purple-400 mb-2">
-                💰 Plus we'll pay YOU <span class="text-yellow-400">0.0025 ETH</span> to participate!
+                💰 We'll pay YOU <span class="text-yellow-400">0.0025 ETH</span> (~$5 USD) to ride!
             </p>
-            <p class="text-center text-sm text-gray-600 mb-12">
-                Web3 wallet required for registration. Participation reward automatically distributed on-chain.
+            <p class="text-center text-md text-gray-500 mb-2">
+                Self-custody Web3 wallet REQUIRED for registration
+            </p>
+            <p class="text-center text-sm text-red-400 mb-12">
+                ⚠️ Exchange wallets (Coinbase, Binance, Kraken) are NOT accepted. You must control your own private keys.
             </p>
 
             <!-- Blockchain Registration -->
@@ -509,13 +517,30 @@
                     <!-- Participation Reward Notice -->
                     <div class="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border border-yellow-500/40 rounded-lg p-6 mb-6">
                         <div class="text-3xl mb-2">💰</div>
-                        <h4 class="text-xl font-bold text-yellow-400 mb-2">Participation Reward Included!</h4>
+                        <h4 class="text-xl font-bold text-yellow-400 mb-2">We Pay You to Ride!</h4>
                         <p class="text-lg font-bold text-white mb-2">
-                            Receive <span class="text-yellow-300">0.0025 ETH</span> (~$5 USD) for registering
+                            Receive <span class="text-yellow-300">0.0025 ETH</span> (~$5 USD) participation reward
                         </p>
-                        <p class="text-sm text-gray-400">
-                            Automatically airdropped to your wallet upon NFT bib mint completion
+                        <p class="text-sm text-gray-400 mb-3">
+                            Automatically airdropped to your self-custody wallet upon NFT bib mint completion
                         </p>
+
+                        <div class="bg-red-900/30 border border-red-500/40 rounded-lg p-3 mb-3">
+                            <p class="text-sm font-bold text-red-300">
+                                🚫 Exchange Wallets NOT Accepted
+                            </p>
+                            <p class="text-xs text-gray-400 mt-1">
+                                Coinbase, Binance, Kraken, and other exchange wallets cannot receive the participation reward. You must use a self-custody wallet where you control your private keys.
+                            </p>
+                        </div>
+
+                        <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-3">
+                            <p class="text-xs font-bold text-green-300 mb-1">✅ Accepted Self-Custody Wallets:</p>
+                            <p class="text-xs text-gray-400">
+                                MetaMask • Rainbow • Trust Wallet • Ledger • Trezor • Frame • Rabby
+                            </p>
+                        </div>
+
                         <div class="mt-4 pt-4 border-t border-yellow-500/20">
                             <p class="text-xs text-gray-500">
                                 *Estimated gas fees: $15-50 USD (network dependent). Participation reward does not cover gas costs.
@@ -527,20 +552,31 @@
                 <form id="blockchainForm" class="space-y-6">
                     <div>
                         <label class="block text-sm font-medium mb-2">
-                            Step 1: Connect Web3 Wallet <span class="text-red-500">*REQUIRED</span>
+                            Step 1: Connect Self-Custody Wallet <span class="text-red-500">*REQUIRED</span>
                         </label>
                         <button type="button" id="connectWalletBtn" class="w-full px-4 py-3 bg-purple-600 rounded-lg font-bold hover:bg-purple-700 transition">
-                            🦊 Connect MetaMask / WalletConnect
+                            🦊 Connect Self-Custody Wallet
                         </button>
                         <p class="text-xs text-gray-500 mt-2">
                             Wallet address: <span class="font-mono" id="walletAddress">Not connected</span>
                         </p>
+                        <p class="text-xs text-gray-600 mt-2">
+                            Supported: MetaMask, Rainbow, Trust Wallet, Ledger, Trezor, WalletConnect
+                        </p>
                     </div>
 
                     <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
-                        <p class="text-sm text-gray-300">
-                            ⚠️ <strong>Wallet connection required to proceed.</strong> Registration cannot be completed without a connected Ethereum wallet for NFT bib minting and participation reward distribution.
+                        <p class="text-sm font-bold text-red-300 mb-2">
+                            ⚠️ Self-Custody Wallet Required
                         </p>
+                        <p class="text-sm text-gray-300 mb-3">
+                            You must connect a wallet where you control your own private keys. Exchange wallets (Coinbase, Binance, Kraken, etc.) are <strong>NOT accepted</strong> as they cannot receive smart contract airdrops for the participation reward.
+                        </p>
+                        <div class="border-l-4 border-yellow-500 pl-3">
+                            <p class="text-xs text-gray-400">
+                                <strong>Why?</strong> Our participation reward smart contract requires the recipient wallet to have private key control for secure airdrop distribution. Exchange-managed wallets lack this capability.
+                            </p>
+                        </div>
                     </div>
 
                     <div class="border-t border-gray-700 pt-6">
@@ -590,7 +626,7 @@
                     <div class="flex items-center gap-3">
                         <input type="checkbox" required id="blockchainWaiver" class="w-5 h-5 rounded bg-gray-800 border-gray-700 text-purple-500">
                         <label for="blockchainWaiver" class="text-sm text-gray-400">
-                            I understand this is a free, unsupported grassroots event and I ride at my own risk. I understand NFT minting requires gas fees ($15-50 USD) paid separately from my connected wallet, and that the participation reward (0.0025 ETH) does not cover these costs. I accept all blockchain transaction risks.
+                            I understand this is a free, unsupported grassroots event and I ride at my own risk. I confirm I am using a self-custody wallet where I control my own private keys (NOT an exchange wallet). I understand NFT minting requires gas fees ($15-50 USD) paid separately from my connected wallet, and that the participation payment (0.0025 ETH / ~$5 USD) does not cover these costs. I accept all blockchain transaction risks.
                         </label>
                     </div>
 
@@ -599,18 +635,18 @@
                     </button>
 
                     <div class="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
-                        <h4 class="font-bold text-yellow-400 mb-2">💸 Transaction Summary:</h4>
+                        <h4 class="font-bold text-yellow-400 mb-2">💸 Payment Summary:</h4>
                         <div class="text-sm space-y-1">
                             <div class="flex justify-between text-gray-300">
                                 <span>Registration Fee:</span>
                                 <span class="text-green-400 font-bold">FREE</span>
                             </div>
                             <div class="flex justify-between text-gray-300">
-                                <span>Participation Reward:</span>
+                                <span>We Pay You:</span>
                                 <span class="text-green-400 font-bold">+0.0025 ETH (~$5)</span>
                             </div>
                             <div class="flex justify-between text-gray-300 border-t border-yellow-500/20 pt-2 mt-2">
-                                <span>Gas Fees (estimated):</span>
+                                <span>Gas Fees (you pay):</span>
                                 <span class="text-red-400 font-bold">-$15 to $50 USD</span>
                             </div>
                             <div class="flex justify-between font-bold text-white border-t border-yellow-500/20 pt-2 mt-2">
@@ -618,6 +654,9 @@
                                 <span class="text-red-400">~$10 to $45 USD</span>
                             </div>
                         </div>
+                        <p class="text-xs text-gray-500 mt-3 pt-3 border-t border-yellow-500/20">
+                            Payment sent to self-custody wallet only. Exchange wallets will be rejected.
+                        </p>
                     </div>
 
                     <p class="text-xs text-gray-500 text-center">
@@ -655,7 +694,14 @@
                 <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
                     <summary class="font-bold text-lg">Do I need a blockchain wallet to register?</summary>
                     <p class="mt-4 text-gray-400">
-                        <strong>Yes, a Web3 wallet is required for registration.</strong> All participants receive their race bib as an NFT on the Ethereum blockchain for permanent verification and results tracking. You'll need MetaMask, WalletConnect, or any Ethereum-compatible wallet. Don't worry - registration is completely free, and you'll even receive a 0.0025 ETH participation reward! (Note: Ethereum gas fees of $15-50 apply for the minting transaction, which are separate from registration and higher than the reward amount.)
+                        <strong>Yes, a self-custody Web3 wallet is required for registration.</strong> All participants receive their race bib as an NFT on the Ethereum blockchain for permanent verification and results tracking. You'll need a wallet where you control your own private keys, such as MetaMask, Rainbow, Trust Wallet, Ledger, or Trezor. Registration is completely free, and we'll even pay you a 0.0025 ETH (~$5 USD) participation reward! (Note: Ethereum gas fees of $15-50 apply for the minting transaction, which are separate from registration and higher than the reward amount.)
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">Why can't I use my Coinbase/Binance wallet?</summary>
+                    <p class="mt-4 text-gray-400">
+                        <strong>Exchange wallets are not accepted.</strong> Our participation reward smart contract uses airdrop functionality that requires the recipient wallet to have private key control for secure distribution. Exchange-managed wallets (Coinbase, Binance, Kraken, Gemini, etc.) don't provide direct access to your private keys, which means they cannot receive smart contract airdrops. You must use a self-custody wallet where you control your own keys - such as MetaMask (browser extension or mobile), Rainbow Wallet, Trust Wallet, or hardware wallets like Ledger or Trezor. Think of it like this: exchange wallets are like checking accounts at a bank, while self-custody wallets are like cash in your own safe. We need to send the payment directly to your safe, not through a bank.
                     </p>
                 </details>
 
@@ -726,7 +772,7 @@
                     Grassroots gravel racing since 2020 • Inspired by Almanzo, Ragnarok 105, and the spirit of free, fun rides
                 </p>
                 <p class="text-xs text-gray-700 mt-4">
-                    Registration requires Ethereum wallet for NFT bib minting and participation reward distribution. Blockchain gas fees apply ($15-50 USD). GPS tracking encouraged. No refunds on gas fees (because that's not how blockchains work). This is a free, unsupported grassroots event - ride at your own risk and have fun out there.
+                    Registration requires self-custody Ethereum wallet (MetaMask, Rainbow, Ledger, Trezor) for NFT bib minting and participation payment distribution. Exchange wallets (Coinbase, Binance, Kraken) NOT accepted. Blockchain gas fees apply ($15-50 USD). Participation payment: 0.0025 ETH (~$5 USD). Net cost: ~$10-45 USD. GPS tracking encouraged. No refunds on gas fees (because that's not how blockchains work). This is a free, unsupported grassroots event - ride at your own risk and have fun out there.
                 </p>
             </div>
         </div>
@@ -782,7 +828,7 @@
                 // Enable submit button
                 const mintBtn = document.getElementById('mintButton');
                 mintBtn.disabled = false;
-                mintBtn.textContent = '⛓️ Mint NFT Bib + Claim Reward';
+                mintBtn.textContent = '⛓️ Mint NFT Bib + Receive Payment';
                 mintBtn.className = 'w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105';
 
                 // Also update nav wallet button
@@ -918,14 +964,18 @@
                 return;
             }
 
-            // Show minting details with participation reward
-            alert('🎉 NFT Bib Minting + Reward Distribution Initiated!\n\n' +
+            // Show minting details with participation payment
+            const gasFee = Math.floor(Math.random() * 35) + 15;
+            const netCost = gasFee - 5;
+            alert('🎉 NFT Bib Minting + Payment Distribution Initiated!\n\n' +
                   '⛓️ Transaction Details:\n' +
-                  '✓ NFT bib being minted to your wallet\n' +
-                  '✓ Participation reward: 0.0025 ETH (~$5 USD)\n' +
-                  '✓ Gas fee charged: $' + (Math.floor(Math.random() * 35) + 15) + ' USD\n' +
+                  '✓ NFT bib being minted to your self-custody wallet\n' +
+                  '✓ Participation payment: 0.0025 ETH (~$5 USD)\n' +
+                  '✓ Gas fee charged: $' + gasFee + ' USD\n' +
+                  '✓ Net cost to you: $' + netCost + ' USD\n' +
                   '✓ Transaction hash: 0x' + Math.random().toString(16).substr(2, 64) + '\n\n' +
                   '⏱️ Estimated completion: 2-5 minutes\n' +
+                  '💰 Payment will be airdropped after NFT mint\n' +
                   '📧 Confirmation email sent with race day details\n' +
                   '🎨 Your NFT will appear in your wallet and on OpenSea\n\n' +
                   'Welcome to GRVL DRMA 2025! 🚴‍♂️');

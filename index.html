@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="gold">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The most over-engineered gravel bike race website in existence">
+    <meta property="og:title" content="GRVL DRMA - Unnecessarily Engineered Gravel Racing">
+    <meta property="og:description" content="Why does a bike race need THIS much technology?">
+    <title>GRVL DRMA - Gold-Plated Gravel Racing Experience™</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Orbitron:wght@400;700;900&family=Cinzel:wght@400;700;900&family=Racing+Sans+One&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Unnecessary but beautiful cursor trail -->
+    <canvas id="cursor-trail"></canvas>
+
+    <!-- Particle system because why not -->
+    <div id="particles"></div>
+
+    <!-- Matrix rain but with bikes -->
+    <canvas id="bike-matrix"></canvas>
+
+    <!-- Absurdly elaborate loading screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <h1 class="glitch" data-text="INITIALIZING GRAVEL">INITIALIZING GRAVEL</h1>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+            <p class="loading-text">Calibrating gold particles... <span id="load-percent">0</span>%</p>
+            <p class="fake-processes">
+                <span class="process">⚙️ Optimizing gravel density matrix...</span>
+                <span class="process">🚴 Loading bike aerodynamics AI...</span>
+                <span class="process">✨ Rendering precious metals...</span>
+                <span class="process">🏆 Initializing blockchain validators...</span>
+                <span class="process">💎 Mining cryptocurrency for registration...</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Konami code easter egg notification -->
+    <div id="konami-notification" class="hidden">
+        <h2>🎮 LEGENDARY MODE ACTIVATED 🎮</h2>
+        <p>You've unlocked the secret RGB Gaming Gravel Mode!</p>
+    </div>
+
+    <!-- Unnecessarily complex navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text glitch" data-text="GRVL DRMA">GRVL DRMA</span>
+                <span class="trademark">™</span>
+                <div class="logo-subtitle">Powered by Blockchain™ & AI™</div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">Why?</a></li>
+                <li><a href="#specs" class="nav-link">Tech Specs</a></li>
+                <li><a href="#register" class="nav-link premium-btn">Register $$$</a></li>
+            </ul>
+            <div class="theme-controls">
+                <button class="theme-btn" data-theme="gold">💛 Gold</button>
+                <button class="theme-btn" data-theme="silver">🤍 Silver</button>
+                <button class="theme-btn" data-theme="platinum">💎 Platinum</button>
+                <button class="theme-btn" data-theme="diamond">💠 Diamond</button>
+                <button class="theme-btn" data-theme="rgb">🌈 RGB</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with MAXIMUM parallax -->
+    <section id="home" class="hero">
+        <div class="parallax-layer layer-1"></div>
+        <div class="parallax-layer layer-2"></div>
+        <div class="parallax-layer layer-3"></div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="word" data-text="GRVL">GRVL</span>
+                <span class="word" data-text="DRMA">DRMA</span>
+            </h1>
+            <p class="hero-subtitle typewriter">The Most Over-Engineered Gravel Race Website Ever Created</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number" data-target="47239">0</span>
+                    <span class="stat-label">Unnecessary Lines of Code</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-target="1337">0</span>
+                    <span class="stat-label">Pointless Animations</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-target="100">0</span>
+                    <span class="stat-label">% Over-Engineered</span>
+                </div>
+            </div>
+            <button class="cta-button" id="explode-btn">
+                <span class="btn-text">Click For Confetti</span>
+                <span class="btn-shimmer"></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title" data-text="WHY DOES THIS EXIST?">WHY DOES THIS EXIST?</h2>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="zoom-in">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Gravel</h3>
+                    <p>Our proprietary machine learning algorithms analyze each pebble using quantum computing and blockchain technology.</p>
+                    <div class="fake-metric">
+                        <span class="metric-value">99.7%</span>
+                        <span class="metric-label">Gravel Accuracy</span>
+                    </div>
+                </div>
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="feature-icon">⛓️</div>
+                    <h3>Blockchain Registration</h3>
+                    <p>Every registration is minted as an NFT on the GravelChain™. Gas fees not included.</p>
+                    <div class="fake-metric">
+                        <span class="metric-value">∞</span>
+                        <span class="metric-label">Environmental Impact</span>
+                    </div>
+                </div>
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="feature-icon">🎨</div>
+                    <h3>5 Theme Modes</h3>
+                    <p>Because one color scheme is for peasants. We have Gold, Silver, Platinum, Diamond, AND RGB Gaming Mode.</p>
+                    <div class="fake-metric">
+                        <span class="metric-value">500%</span>
+                        <span class="metric-label">More Colors Than Necessary</span>
+                    </div>
+                </div>
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="feature-icon">✨</div>
+                    <h3>Particle Effects</h3>
+                    <p>Why have a static website when you can have 10,000 animated particles destroying your GPU?</p>
+                    <div class="fake-metric">
+                        <span class="metric-value">9001</span>
+                        <span class="metric-label">Particles Per Frame</span>
+                    </div>
+                </div>
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Konami Code</h3>
+                    <p>Yes, we implemented the Konami code. Yes, it unlocks a secret mode. No, we won't tell you what it does.</p>
+                    <div class="fake-metric">
+                        <span class="metric-value">↑↑↓↓</span>
+                        <span class="metric-label">Easter Eggs</span>
+                    </div>
+                </div>
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="feature-icon">🔊</div>
+                    <h3>Sound Effects</h3>
+                    <p>Hover sounds, click sounds, scroll sounds. We have sounds for things that don't need sounds.</p>
+                    <div class="fake-metric">
+                        <span class="metric-value">42</span>
+                        <span class="metric-label">Unnecessary Audio Files</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Specs Section -->
+    <section id="specs" class="section dark-section">
+        <div class="container">
+            <h2 class="section-title" data-text="TECHNICAL SPECIFICATIONS">TECHNICAL SPECIFICATIONS</h2>
+            <div class="specs-container">
+                <div class="spec-group">
+                    <h3>Frontend Technologies</h3>
+                    <ul class="tech-list">
+                        <li>✅ Vanilla JS (because we're purists who also hate ourselves)</li>
+                        <li>✅ CSS3 with 47 different animations</li>
+                        <li>✅ HTML5 Canvas for unnecessary visual effects</li>
+                        <li>✅ Web Animations API for maximum smoothness</li>
+                        <li>✅ Custom cursor trails (obviously)</li>
+                        <li>✅ Parallax scrolling on parallax scrolling</li>
+                        <li>✅ 5 complete theme implementations</li>
+                        <li>✅ Particle systems that make NASA jealous</li>
+                    </ul>
+                </div>
+                <div class="spec-group">
+                    <h3>Unnecessary Features</h3>
+                    <ul class="tech-list">
+                        <li>🎯 Matrix rain effect (but with bikes)</li>
+                        <li>🎯 Konami code implementation</li>
+                        <li>🎯 Confetti explosions on demand</li>
+                        <li>🎯 Glitch text effects</li>
+                        <li>🎯 Animated gradient backgrounds</li>
+                        <li>🎯 Typewriter text animations</li>
+                        <li>🎯 Loading screen longer than the actual content</li>
+                        <li>🎯 Counter animations that count to random numbers</li>
+                    </ul>
+                </div>
+                <div class="spec-group">
+                    <h3>Performance Metrics</h3>
+                    <ul class="tech-list">
+                        <li>⚡ Page Weight: Unnecessarily Heavy</li>
+                        <li>⚡ GPU Usage: Maximum</li>
+                        <li>⚡ Battery Drain: Yes</li>
+                        <li>⚡ Fan Noise: Airplane Taking Off</li>
+                        <li>⚡ Accessibility Score: We'll get to that later™</li>
+                        <li>⚡ Carbon Footprint: Concerning</li>
+                        <li>⚡ Over-Engineering Index: 11/10</li>
+                        <li>⚡ "Why?" Questions Per Visitor: ∞</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="progress-bars">
+                <div class="progress-item">
+                    <label>Gold-Plating Level</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-progress="100"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <label>Silver-Gilding Intensity</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-progress="100"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <label>Unnecessary Complexity</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-progress="147"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <label>Meme Factor</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-progress="420"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section id="register" class="section">
+        <div class="container">
+            <h2 class="section-title" data-text="REGISTER NOW">REGISTER NOW</h2>
+            <div class="register-content">
+                <div class="register-card premium-card">
+                    <div class="card-glow"></div>
+                    <h3>Standard Gravel Package</h3>
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">499</span>
+                        <span class="period">/race</span>
+                    </div>
+                    <ul class="package-features">
+                        <li>✓ Access to gravel</li>
+                        <li>✓ A bib with a number on it</li>
+                        <li>✓ Questionable life choices</li>
+                        <li>✓ Sore legs for a week</li>
+                        <li>✓ Instagram content</li>
+                    </ul>
+                    <button class="register-btn">Register</button>
+                </div>
+                <div class="register-card ultra-premium-card">
+                    <div class="card-glow"></div>
+                    <div class="premium-badge">ULTRA PREMIUM™</div>
+                    <h3>Diamond Elite NFT Package</h3>
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">4,999</span>
+                        <span class="period">/race</span>
+                    </div>
+                    <ul class="package-features">
+                        <li>✓ Everything in Standard</li>
+                        <li>✓ Your registration as an NFT</li>
+                        <li>✓ AI-optimized gravel placement</li>
+                        <li>✓ Blockchain-verified finish time</li>
+                        <li>✓ Quantum-encrypted water bottle</li>
+                        <li>✓ Metaverse trophy ceremony</li>
+                        <li>✓ Bragging rights (priceless)</li>
+                    </ul>
+                    <button class="register-btn premium">Shut Up And Take My Money</button>
+                </div>
+            </div>
+            <p class="disclaimer">* No actual blockchain, AI, or quantum technology is used. It's just a bike race.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GRVL DRMA™</h4>
+                    <p>The most unnecessarily complex gravel race website ever created.</p>
+                    <p>© 2026 GRVL DRMA. All rights reserved. Some wrongs reserved too.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Technologies</h4>
+                    <p>Built with: Hubris, Caffeine, and Questionable Decisions</p>
+                    <p>Hosted on: Overpriced Cloud Infrastructure™</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <p>Terms of Service: You clicked things</p>
+                    <p>Privacy Policy: We don't have your data (yet)</p>
+                    <p>Cookie Policy: We use cookies because everyone else does</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Made with ❤️ and way too much time</p>
+                <p>Press ↑ ↑ ↓ ↓ ← → ← → B A for a surprise</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Confetti Container -->
+    <div id="confetti-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  grvl-drma:
+    build: .
+    container_name: grvl-drma-website
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    labels:
+      - "description=The most over-engineered gravel bike race website"
+      - "maintainer=Someone with too much time"

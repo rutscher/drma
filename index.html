@@ -316,12 +316,35 @@
                         <li>✓ Training Peaks auto-sync</li>
                     </ul>
                 </div>
+
+                <div class="glass p-8 rounded-2xl border-2 border-orange-500/30">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">🍕</div>
+                        <h3 class="text-2xl font-bold">Garmin AI Nutrition Tracking</h3>
+                        <span class="px-3 py-1 bg-orange-600 text-xs rounded-full">RECOMMENDED</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Garmin's AI-powered food recognition automatically logs your gas station nutrition stops. Computer vision analyzes your convenience store purchases in real-time.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li>✓ Auto-detects Mountain Dew, Snickers, beef jerky</li>
+                        <li>✓ Calorie tracking synced to Garmin Connect</li>
+                        <li>✓ AI recommendations for optimal gas station fueling</li>
+                        <li>✓ Pickle juice detection and hydration alerts</li>
+                        <li>✓ Compatible with Garmin Edge 1040/1050</li>
+                    </ul>
+                    <div class="mt-4 bg-orange-900/20 border border-orange-500/30 rounded-lg p-3">
+                        <p class="text-xs text-gray-400">
+                            <strong>Pro tip:</strong> Enable the Casey's General Store integration for automatic pizza slice classification and carb load optimization.
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <!-- Integration Status -->
             <div class="glass rounded-2xl p-8">
                 <h3 class="text-2xl font-bold mb-6 text-center">Your Integration Status</h3>
-                <div class="grid md:grid-cols-4 gap-4">
+                <div class="grid md:grid-cols-5 gap-4">
                     <div class="text-center p-4 bg-gray-800/50 rounded-lg">
                         <div id="walletStatus" class="text-3xl mb-2">🔴</div>
                         <div class="text-sm text-gray-400">Wallet</div>
@@ -341,6 +364,11 @@
                         <div class="text-3xl mb-2">🔴</div>
                         <div class="text-sm text-gray-400">Power Meter</div>
                         <div class="text-xs text-gray-600">Not Synced</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                        <div class="text-3xl mb-2">🔴</div>
+                        <div class="text-sm text-gray-400">Garmin Nutrition</div>
+                        <div class="text-xs text-gray-600">Not Enabled</div>
                     </div>
                 </div>
             </div>
@@ -714,6 +742,13 @@
                     <p class="mt-4 text-gray-400">
                         Optional but recommended! Upload photos of your local gravel and our TensorFlow.js ML model will classify gravel types
                         and provide optimal tire pressure recommendations. The model was trained on 10,000+ gravel images from Wisconsin's Driftless region.
+                    </p>
+                </details>
+
+                <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                    <summary class="font-bold text-lg">Do I really need Garmin's AI food tracker for gas station stops?</summary>
+                    <p class="mt-4 text-gray-400">
+                        Recommended but not required. Garmin's AI nutrition tracking uses computer vision to automatically log your convenience store purchases during race stops. The Edge 1040/1050 can detect Mountain Dew, Snickers bars, beef jerky, and even pickle juice in real-time. This data syncs to Garmin Connect for post-race nutrition analysis and helps optimize your gas station fueling strategy for future events. Enable the Casey's General Store integration for automatic pizza slice classification and carb load recommendations. While you can manually log your food, the AI tracker saves valuable seconds at each stop.
                     </p>
                 </details>
 

@@ -70,3 +70,8 @@ k8s/secrets
 
 # Turborepo
 .turbo
+
+# Downloaded packages
+*.deb
+*.rpm
+*.tar.gz

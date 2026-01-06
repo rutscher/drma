@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initProgressBars();
     initConfetti();
     initCustomCursor();
+    initCookieBanner();
+    initNewsletterPopup();
+    initLiveCounter();
+    initScrollToTop();
 });
 
 // ============================================
@@ -394,13 +398,20 @@ function initConfetti() {
         createConfettiBurst(100);
     });
 
-    // Also add confetti to register buttons
+    // Also add confetti to register buttons (except the real one)
     const registerBtns = document.querySelectorAll('.register-btn');
     registerBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            // Skip if it's the grassroots button (link to real site)
+            if (btn.classList.contains('grassroots-btn')) {
+                return; // Let it navigate normally
+            }
+
             createConfettiBurst(50);
-            // Show alert
-            alert('Just kidding! This is a parody website. But wouldn\'t that be something? 💸');
+            // Show alert for fake NFT button
+            if (btn.classList.contains('premium')) {
+                alert('🤡 GOTCHA! This button does nothing!\n\nThe race is actually FREE at grvldrma.com\n\nThis whole website is a parody making fun of over-engineered tech.\n\nGo to the real simple website instead! 🚴');
+            }
         });
     });
 }
@@ -583,4 +594,125 @@ sparkleStyle.textContent = `
 `;
 document.head.appendChild(sparkleStyle);
 
+// ============================================
+// COOKIE BANNER (Satirical)
+// ============================================
+function initCookieBanner() {
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptBtn = cookieBanner.querySelector('.cookie-btn.accept');
+    const rejectBtn = cookieBanner.querySelector('.cookie-btn.reject');
+    const settingsBtn = cookieBanner.querySelector('.cookie-btn.settings');
+
+    // Show cookie banner after 2 seconds
+    setTimeout(() => {
+        cookieBanner.classList.remove('hidden');
+    }, 2000);
+
+    acceptBtn.addEventListener('click', () => {
+        createConfettiBurst(30);
+        alert('🍪 Thank you for accepting cookies!\n\nJust kidding, we don\'t actually use cookies. This is satire making fun of annoying cookie banners.\n\nThe real GRVL DRMA website doesn\'t need any of this nonsense.');
+        cookieBanner.classList.add('hidden');
+    });
+
+    rejectBtn.addEventListener('click', () => {
+        alert('🤡 DENIED!\n\nJust kidding, this button actually does nothing because this is a parody.\n\nReal cookie banners make "Reject" hard to find. We made it obvious AND useless.');
+        // Don't hide the banner, just like real annoying cookie banners
+    });
+
+    settingsBtn.addEventListener('click', () => {
+        alert('⚙️ Cookie Settings\n\n[Page 1 of 343]\n\nWe use cookies for:\n- Tracking\n- More tracking\n- Analytics (also tracking)\n- Selling your data\n- Confusing you with legal jargon\n\nJust kidding! This is satire. No actual cookies here.');
+    });
+}
+
+// ============================================
+// NEWSLETTER POPUP (Dark Pattern Satire)
+// ============================================
+function initNewsletterPopup() {
+    const popup = document.getElementById('newsletter-popup');
+    const closeBtn = document.getElementById('popup-close');
+    const subscribeBtn = popup.querySelector('.popup-subscribe');
+    const rejectLink = popup.querySelector('.popup-small-text a');
+
+    // Show popup after 10 seconds (annoying timing)
+    setTimeout(() => {
+        popup.classList.remove('hidden');
+    }, 10000);
+
+    closeBtn.addEventListener('click', () => {
+        popup.classList.add('hidden');
+    });
+
+    subscribeBtn.addEventListener('click', () => {
+        createConfettiBurst(40);
+        alert('📧 SUBSCRIBED!\n\nYour inbox will now be flooded with...\n\n...absolutely nothing!\n\nThis is a parody. We don\'t have a newsletter.\n\nGo to grvldrma.com for actual race info!');
+        popup.classList.add('hidden');
+    });
+
+    rejectLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('😢 We respect your decision...\n\nJust kidding! This link is insulting you for closing the popup.\n\nThis is making fun of "dark patterns" that manipulate users.\n\nReal GRVL DRMA doesn\'t do this crap.');
+        popup.classList.add('hidden');
+    });
+
+    // Also close on background click
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.classList.add('hidden');
+        }
+    });
+}
+
+// ============================================
+// LIVE USER COUNTER (Fake)
+// ============================================
+function initLiveCounter() {
+    const liveUsersSpan = document.getElementById('live-users');
+    let currentCount = 42;
+
+    // Randomly change the number every 3-7 seconds
+    setInterval(() => {
+        const change = Math.floor(Math.random() * 10) - 5; // -5 to +5
+        currentCount = Math.max(1, currentCount + change);
+        liveUsersSpan.textContent = currentCount;
+
+        // Occasionally show funny numbers
+        if (Math.random() > 0.95) {
+            const funnyNumbers = [69, 420, 1337, 9001, 42, 666, 404];
+            currentCount = funnyNumbers[Math.floor(Math.random() * funnyNumbers.length)];
+            liveUsersSpan.textContent = currentCount;
+        }
+    }, Math.random() * 4000 + 3000);
+}
+
+// ============================================
+// SCROLL TO TOP BUTTON
+// ============================================
+function initScrollToTop() {
+    const scrollBtn = document.getElementById('scroll-top-btn');
+
+    // Show/hide based on scroll position
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 500) {
+            scrollBtn.classList.remove('hidden');
+        } else {
+            scrollBtn.classList.add('hidden');
+        }
+    });
+
+    // Scroll to top on click
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        createConfettiBurst(20);
+    });
+}
+
 console.log('%c🎮 All systems initialized! Enjoy the ride! 🚴', 'font-size: 18px; font-weight: bold; color: #FFD700;');
+console.log('%c⚠️ NEW FEATURES UNLOCKED ⚠️', 'font-size: 16px; font-weight: bold; color: #FF6B6B;');
+console.log('- Annoying cookie banner ✓');
+console.log('- Dark pattern newsletter popup ✓');
+console.log('- Fake live user counter ✓');
+console.log('- Over-engineered scroll button ✓');
+console.log('All designed to make you cringe! 🤡');

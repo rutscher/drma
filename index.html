@@ -233,23 +233,30 @@
             </p>
 
             <div class="grid md:grid-cols-2 gap-8 mb-16">
-                <div class="glass p-8 rounded-2xl border-2 border-purple-500/30">
+                <div class="glass p-8 rounded-2xl border-2 border-green-500/40 bg-gradient-to-br from-purple-900/20 to-green-900/20">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="text-4xl">⛓️</div>
                         <h3 class="text-2xl font-bold">Blockchain NFT Race Bib</h3>
-                        <span class="px-3 py-1 bg-purple-600 text-xs rounded-full">RECOMMENDED</span>
+                        <span class="px-3 py-1 bg-green-600 text-xs rounded-full font-bold">REQUIRED</span>
+                    </div>
+                    <div class="bg-yellow-900/30 border border-yellow-500/40 rounded-lg p-3 mb-4">
+                        <p class="text-sm font-bold text-yellow-300">💰 Includes 0.0025 ETH participation reward (~$5 USD)</p>
                     </div>
                     <p class="text-gray-400 mb-4">
-                        Your race bib will be minted as an NFT on Ethereum blockchain for permanent verification and authenticity. Connect your Web3 wallet during registration.
+                        All race bibs are NFTs minted on Ethereum blockchain for permanent verification. Connect your Web3 wallet during registration to receive your bib + participation reward.
                     </p>
-                    <ul class="space-y-2 text-sm text-gray-500">
+                    <ul class="space-y-2 text-sm text-gray-400">
                         <li>✓ Permanent ownership proof</li>
                         <li>✓ Transferable to other riders</li>
                         <li>✓ On-chain race results</li>
+                        <li>✓ Automatic participation reward airdrop</li>
                         <li>✓ Compatible with MetaMask, Rainbow, Coinbase Wallet</li>
                     </ul>
-                    <button class="mt-4 w-full px-6 py-3 bg-purple-600 rounded-lg font-bold hover:bg-purple-700 transition">
-                        Connect Wallet to Mint
+                    <p class="mt-4 text-xs text-gray-500">
+                        Gas fees: $15-50 USD (higher than reward, but you keep the NFT!)
+                    </p>
+                    <button onclick="document.getElementById('register').scrollIntoView({behavior: 'smooth'})" class="mt-4 w-full px-6 py-3 bg-green-600 rounded-lg font-bold hover:bg-green-700 transition">
+                        Register Now (Required)
                     </button>
                 </div>
 
@@ -483,112 +490,90 @@
             <p class="text-center text-gray-400 mb-4 text-lg">
                 Did we mention it's <span class="text-orange-500 font-bold">completely FREE</span>?
             </p>
+            <p class="text-center text-xl font-bold text-purple-400 mb-2">
+                💰 Plus we'll pay YOU <span class="text-yellow-400">0.0025 ETH</span> to participate!
+            </p>
             <p class="text-center text-sm text-gray-600 mb-12">
-                Choose between traditional registration or blockchain-verified NFT race bib
+                Web3 wallet required for registration. Participation reward automatically distributed on-chain.
             </p>
 
-            <!-- Registration Type Tabs -->
-            <div class="flex justify-center gap-4 mb-8">
-                <button onclick="showTab('traditional')" id="tabTraditional" class="px-6 py-3 bg-orange-600 rounded-lg font-bold">
-                    Traditional (Free)
-                </button>
-                <button onclick="showTab('blockchain')" id="tabBlockchain" class="px-6 py-3 bg-gray-700 rounded-lg font-bold">
-                    Blockchain NFT (Free)
-                </button>
-            </div>
-
-            <!-- Traditional Registration -->
-            <div id="traditionalReg" class="glass rounded-2xl p-8 md:p-12">
-                <form id="registrationForm" class="space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">First Name</label>
-                            <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Last Name</label>
-                            <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Email</label>
-                        <input type="email" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Emergency Contact</label>
-                        <input type="tel" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium mb-2">GPS Device (for live tracking)</label>
-                        <select class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500 transition">
-                            <option>Garmin Edge</option>
-                            <option>Wahoo ELEMNT</option>
-                            <option>Smartphone App</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <input type="checkbox" required id="waiver" class="w-5 h-5 rounded bg-gray-800 border-gray-700 text-orange-500">
-                        <label for="waiver" class="text-sm text-gray-400">
-                            I understand this is a free, unsupported grassroots event and I ride at my own risk. I agree to GPS tracking and data collection.
-                        </label>
-                    </div>
-
-                    <button type="submit" class="w-full px-8 py-4 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105">
-                        Complete Registration
-                    </button>
-
-                    <p class="text-xs text-gray-500 text-center">
-                        Registration confirmation will be sent to your email. GPS device pairing instructions included.
-                    </p>
-                </form>
-            </div>
-
             <!-- Blockchain Registration -->
-            <div id="blockchainReg" class="glass rounded-2xl p-8 md:p-12 hidden">
+            <div id="blockchainReg" class="glass rounded-2xl p-8 md:p-12">
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4">⛓️</div>
-                    <h3 class="text-2xl font-bold mb-2">Blockchain-Verified Race Bib</h3>
-                    <p class="text-gray-400">
+                    <h3 class="text-2xl font-bold mb-2">Blockchain-Verified Race Bib + Participation Reward</h3>
+                    <p class="text-gray-400 mb-4">
                         Your race bib will be minted as an NFT on Ethereum for permanent verification
                     </p>
+
+                    <!-- Participation Reward Notice -->
+                    <div class="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border border-yellow-500/40 rounded-lg p-6 mb-6">
+                        <div class="text-3xl mb-2">💰</div>
+                        <h4 class="text-xl font-bold text-yellow-400 mb-2">Participation Reward Included!</h4>
+                        <p class="text-lg font-bold text-white mb-2">
+                            Receive <span class="text-yellow-300">0.0025 ETH</span> (~$5 USD) for registering
+                        </p>
+                        <p class="text-sm text-gray-400">
+                            Automatically airdropped to your wallet upon NFT bib mint completion
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-yellow-500/20">
+                            <p class="text-xs text-gray-500">
+                                *Estimated gas fees: $15-50 USD (network dependent). Participation reward does not cover gas costs.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <form id="blockchainForm" class="space-y-6">
                     <div>
-                        <label class="block text-sm font-medium mb-2">Connect Web3 Wallet</label>
-                        <button type="button" class="w-full px-4 py-3 bg-purple-600 rounded-lg font-bold hover:bg-purple-700 transition">
-                            Connect MetaMask / WalletConnect
+                        <label class="block text-sm font-medium mb-2">
+                            Step 1: Connect Web3 Wallet <span class="text-red-500">*REQUIRED</span>
+                        </label>
+                        <button type="button" id="connectWalletBtn" class="w-full px-4 py-3 bg-purple-600 rounded-lg font-bold hover:bg-purple-700 transition">
+                            🦊 Connect MetaMask / WalletConnect
                         </button>
                         <p class="text-xs text-gray-500 mt-2">
-                            Wallet address: <span class="font-mono">Not connected</span>
+                            Wallet address: <span class="font-mono" id="walletAddress">Not connected</span>
                         </p>
                     </div>
 
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">First Name</label>
-                            <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Last Name</label>
-                            <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
-                        </div>
+                    <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                        <p class="text-sm text-gray-300">
+                            ⚠️ <strong>Wallet connection required to proceed.</strong> Registration cannot be completed without a connected Ethereum wallet for NFT bib minting and participation reward distribution.
+                        </p>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Email</label>
-                        <input type="email" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
-                    </div>
+                    <div class="border-t border-gray-700 pt-6">
+                        <label class="block text-sm font-medium mb-4">Step 2: Enter Your Information</label>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Preferred Bib Number (1-999)</label>
-                        <input type="number" min="1" max="999" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
-                        <p class="text-xs text-gray-500 mt-1">Subject to availability. Will be verified on-chain.</p>
+                        <div class="space-y-4">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">First Name</label>
+                                    <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Last Name</label>
+                                    <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Emergency Contact Phone</label>
+                                <input type="tel" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Preferred Bib Number (1-999)</label>
+                                <input type="number" min="1" max="999" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 transition">
+                                <p class="text-xs text-gray-500 mt-1">Subject to availability. Will be verified on-chain.</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
@@ -605,16 +590,38 @@
                     <div class="flex items-center gap-3">
                         <input type="checkbox" required id="blockchainWaiver" class="w-5 h-5 rounded bg-gray-800 border-gray-700 text-purple-500">
                         <label for="blockchainWaiver" class="text-sm text-gray-400">
-                            I understand NFT minting requires gas fees paid separately. I accept blockchain transaction risks.
+                            I understand this is a free, unsupported grassroots event and I ride at my own risk. I understand NFT minting requires gas fees ($15-50 USD) paid separately from my connected wallet, and that the participation reward (0.0025 ETH) does not cover these costs. I accept all blockchain transaction risks.
                         </label>
                     </div>
 
-                    <button type="submit" class="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105">
-                        Mint NFT Race Bib
+                    <button type="submit" id="mintButton" disabled class="w-full px-8 py-4 bg-gray-600 text-gray-400 font-bold text-lg rounded-full shadow-lg cursor-not-allowed transition-all">
+                        Connect Wallet to Continue
                     </button>
 
+                    <div class="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
+                        <h4 class="font-bold text-yellow-400 mb-2">💸 Transaction Summary:</h4>
+                        <div class="text-sm space-y-1">
+                            <div class="flex justify-between text-gray-300">
+                                <span>Registration Fee:</span>
+                                <span class="text-green-400 font-bold">FREE</span>
+                            </div>
+                            <div class="flex justify-between text-gray-300">
+                                <span>Participation Reward:</span>
+                                <span class="text-green-400 font-bold">+0.0025 ETH (~$5)</span>
+                            </div>
+                            <div class="flex justify-between text-gray-300 border-t border-yellow-500/20 pt-2 mt-2">
+                                <span>Gas Fees (estimated):</span>
+                                <span class="text-red-400 font-bold">-$15 to $50 USD</span>
+                            </div>
+                            <div class="flex justify-between font-bold text-white border-t border-yellow-500/20 pt-2 mt-2">
+                                <span>Your Net Cost:</span>
+                                <span class="text-red-400">~$10 to $45 USD</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <p class="text-xs text-gray-500 text-center">
-                        Gas fees: ~$15-50 USD depending on network congestion. Minting confirmation sent via email.
+                        Minting confirmation and race day details will be sent via email. NFT will appear in your wallet within 2-5 minutes of transaction confirmation.
                     </p>
                 </form>
             </div>
@@ -640,16 +647,15 @@
                 <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
                     <summary class="font-bold text-lg">Is it really free?</summary>
                     <p class="mt-4 text-gray-400">
-                        Yes! 100% free. No entry fees, no hidden costs. We're inspired by Minnesota's grassroots gravel events like Almanzo and Ragnarok 105.
-                        NFT race bibs require gas fees for blockchain minting, but traditional registration is completely free.
+                        <strong>Yes! Registration is 100% free with no entry fees.</strong> We're inspired by Minnesota's grassroots gravel events like Almanzo and Ragnarok 105.
+                        As a bonus, we'll pay YOU a 0.0025 ETH (~$5 USD) participation reward just for registering! However, since all race bibs are NFTs on the Ethereum blockchain for permanent verification, you'll need to pay blockchain gas fees ($15-50 USD) for the minting transaction. So while registration itself is free, the net cost is approximately $10-45 depending on network congestion. But you get to keep your NFT bib forever!
                     </p>
                 </details>
 
                 <details class="glass rounded-xl p-6 cursor-pointer hover:bg-gray-800/50 transition">
                     <summary class="font-bold text-lg">Do I need a blockchain wallet to register?</summary>
                     <p class="mt-4 text-gray-400">
-                        No! Blockchain NFT bibs are optional. You can register traditionally for free with just email.
-                        However, if you want your race bib as a permanent NFT on Ethereum with on-chain results verification, you'll need a Web3 wallet like MetaMask.
+                        <strong>Yes, a Web3 wallet is required for registration.</strong> All participants receive their race bib as an NFT on the Ethereum blockchain for permanent verification and results tracking. You'll need MetaMask, WalletConnect, or any Ethereum-compatible wallet. Don't worry - registration is completely free, and you'll even receive a 0.0025 ETH participation reward! (Note: Ethereum gas fees of $15-50 apply for the minting transaction, which are separate from registration and higher than the reward amount.)
                     </p>
                 </details>
 
@@ -720,7 +726,7 @@
                     Grassroots gravel racing since 2020 • Inspired by Almanzo, Ragnarok 105, and the spirit of free, fun rides
                 </p>
                 <p class="text-xs text-gray-700 mt-4">
-                    No actual blockchain integration required. NFT bibs are optional. GPS tracking is encouraged but not enforced. Have fun out there.
+                    Registration requires Ethereum wallet for NFT bib minting and participation reward distribution. Blockchain gas fees apply ($15-50 USD). GPS tracking encouraged. No refunds on gas fees (because that's not how blockchains work). This is a free, unsupported grassroots event - ride at your own risk and have fun out there.
                 </p>
             </div>
         </div>
@@ -756,25 +762,38 @@
             }
         });
 
-        // Registration Tab Switching
-        function showTab(tab) {
-            const tradBtn = document.getElementById('tabTraditional');
-            const blockBtn = document.getElementById('tabBlockchain');
-            const tradReg = document.getElementById('traditionalReg');
-            const blockReg = document.getElementById('blockchainReg');
+        // Wallet Connection
+        let isWalletConnected = false;
 
-            if (tab === 'traditional') {
-                tradBtn.className = 'px-6 py-3 bg-orange-600 rounded-lg font-bold';
-                blockBtn.className = 'px-6 py-3 bg-gray-700 rounded-lg font-bold';
-                tradReg.classList.remove('hidden');
-                blockReg.classList.add('hidden');
-            } else {
-                tradBtn.className = 'px-6 py-3 bg-gray-700 rounded-lg font-bold';
-                blockBtn.className = 'px-6 py-3 bg-purple-600 rounded-lg font-bold';
-                tradReg.classList.add('hidden');
-                blockReg.classList.remove('hidden');
+        document.getElementById('connectWalletBtn').addEventListener('click', function() {
+            if (!isWalletConnected) {
+                // Simulate wallet connection
+                isWalletConnected = true;
+                const mockAddress = '0x' + Math.random().toString(16).substr(2, 8) + '...' + Math.random().toString(16).substr(2, 4);
+
+                // Update UI
+                this.textContent = '✅ Wallet Connected';
+                this.className = 'w-full px-4 py-3 bg-green-600 rounded-lg font-bold cursor-default';
+                this.disabled = true;
+
+                document.getElementById('walletAddress').textContent = mockAddress;
+                document.getElementById('walletAddress').className = 'font-mono text-green-400';
+
+                // Enable submit button
+                const mintBtn = document.getElementById('mintButton');
+                mintBtn.disabled = false;
+                mintBtn.textContent = '⛓️ Mint NFT Bib + Claim Reward';
+                mintBtn.className = 'w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105';
+
+                // Also update nav wallet button
+                const navWalletBtn = document.getElementById('walletBtn');
+                if (navWalletBtn) {
+                    navWalletBtn.textContent = mockAddress;
+                    navWalletBtn.className = 'px-4 py-2 wallet-connected rounded-full text-xs font-bold transition';
+                    walletConnected = true;
+                }
             }
-        }
+        });
 
         // Countdown Timer (to May 10, 2025)
         function updateCountdown() {
@@ -890,15 +909,26 @@
         updateWeather();
         setInterval(updateWeather, 300000);
 
-        // Form Submissions
-        document.getElementById('registrationForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Traditional registration submitted!\n\nCheck your email for:\n✓ Confirmation\n✓ GPS device pairing instructions\n✓ Race day details\n✓ Strava integration link');
-        });
-
+        // Form Submission
         document.getElementById('blockchainForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            alert('NFT Bib Minting Initiated!\n\n✓ Transaction sent to Ethereum network\n✓ Estimated gas fee: $23.50\n✓ Minting will complete in 2-5 minutes\n✓ NFT will appear in your wallet\n\nCheck your email for race day QR code!');
+
+            if (!isWalletConnected) {
+                alert('❌ Error: Wallet not connected\n\nPlease connect your Web3 wallet to proceed with registration.');
+                return;
+            }
+
+            // Show minting details with participation reward
+            alert('🎉 NFT Bib Minting + Reward Distribution Initiated!\n\n' +
+                  '⛓️ Transaction Details:\n' +
+                  '✓ NFT bib being minted to your wallet\n' +
+                  '✓ Participation reward: 0.0025 ETH (~$5 USD)\n' +
+                  '✓ Gas fee charged: $' + (Math.floor(Math.random() * 35) + 15) + ' USD\n' +
+                  '✓ Transaction hash: 0x' + Math.random().toString(16).substr(2, 64) + '\n\n' +
+                  '⏱️ Estimated completion: 2-5 minutes\n' +
+                  '📧 Confirmation email sent with race day details\n' +
+                  '🎨 Your NFT will appear in your wallet and on OpenSea\n\n' +
+                  'Welcome to GRVL DRMA 2025! 🚴‍♂️');
         });
 
         // Smooth scroll

@@ -1,0 +1,200 @@
+// This is your Prisma schema file
+// Because we absolutely need a database for a static gravel race website
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model (with way too many fields)
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  username          String   @unique
+  firstName         String?
+  lastName          String?
+  avatar            String?
+  bio               String?  @db.Text
+
+  // Blockchain stuff
+  walletAddress     String?  @unique
+  nftBibTokenId     String?  @unique
+
+  // Race data
+  bibNumber         Int?     @unique
+  registrationDate  DateTime @default(now())
+  raceCategory      RaceCategory?
+
+  // Over-engineered preferences
+  preferredGravelType String?
+  tirePressure        Float?
+  bikeWeight          Float?
+  favoriteChainsuck   Boolean @default(false)
+
+  // Telemetry
+  telemetry         RaceTelemetry[]
+  gravelAnalysis    GravelAnalysis[]
+
+  // Timestamps (because we track EVERYTHING)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  lastLoginAt       DateTime?
+  emailVerifiedAt   DateTime?
+  deletedAt         DateTime? // Soft deletes for extra complexity
+
+  @@index([email])
+  @@index([walletAddress])
+  @@map("users")
+}
+
+enum RaceCategory {
+  RECREATIONAL
+  COMPETITIVE
+  ELITE
+  SUFFERING_ENTHUSIAST
+  INSTAGRAM_INFLUENCER
+  JUST_HERE_FOR_STRAVA
+}
+
+// Real-time race telemetry (because we need sub-second accuracy)
+model RaceTelemetry {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  timestamp       DateTime @default(now())
+  latitude        Float
+  longitude       Float
+  elevation       Float
+  speed           Float
+  heartRate       Int?
+  power           Int?
+  cadence         Int?
+  temperature     Float?
+
+  // Gravel-specific metrics
+  gravelType      String?
+  dustLevel       Float?
+  roughnessIndex  Float?
+  chunkiness      Float?
+
+  @@index([userId, timestamp])
+  @@map("race_telemetry")
+}
+
+// AI-powered gravel analysis results
+model GravelAnalysis {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  imageUrl        String?
+  analysisDate    DateTime @default(now())
+
+  // AI results
+  gravelType      String
+  confidence      Float
+  roughness       Float
+  dustiness       Float
+  chunkiness      Float
+
+  // ML metadata
+  modelVersion    String
+  processingTime  Int // milliseconds
+
+  @@index([userId])
+  @@map("gravel_analysis")
+}
+
+// NFT race bibs (on the blockchain, obviously)
+model NFTBib {
+  id              String   @id @default(cuid())
+  tokenId         String   @unique
+  contractAddress String
+  bibNumber       Int      @unique
+
+  ownerAddress    String
+  mintedAt        DateTime @default(now())
+
+  // Metadata
+  ipfsHash        String?
+  metadataUri     String?
+
+  // Rarity and traits (because everything needs to be rare)
+  rarity          NFTRarity
+  backgroundColor String
+  fontStyle       String
+  specialEffects  String[]
+
+  @@index([ownerAddress])
+  @@map("nft_bibs")
+}
+
+enum NFTRarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+  MYTHIC
+}
+
+// Course/Route data
+model Course {
+  id              String   @id @default(cuid())
+  name            String
+  description     String   @db.Text
+  distance        Float
+  elevationGain   Float
+
+  // 3D terrain data
+  terrainData     Json?
+  elevationProfile Json?
+
+  // GPS track
+  gpsTrack        Json // Array of coordinates
+
+  surfaceTypes    SurfaceType[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("courses")
+}
+
+// Different gravel surface types encountered
+model SurfaceType {
+  id              String   @id @default(cuid())
+  courseId        String
+  course          Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  name            String
+  startDistance   Float
+  endDistance     Float
+  roughness       Float
+
+  @@index([courseId])
+  @@map("surface_types")
+}
+
+// Analytics (because we track EVERYTHING)
+model Analytics {
+  id              String   @id @default(cuid())
+  event           String
+  properties      Json?
+  timestamp       DateTime @default(now())
+
+  // User tracking
+  userId          String?
+  sessionId       String?
+  ipAddress       String?
+  userAgent       String?
+
+  @@index([event, timestamp])
+  @@map("analytics")
+}

@@ -1,0 +1,40 @@
+{
+  "name": "grvl-drma",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The most unnecessarily over-engineered gravel bike race website in existence",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "type-check": "turbo run type-check",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "k8s:apply": "kubectl apply -f k8s/",
+    "db:migrate": "turbo run db:migrate",
+    "db:seed": "turbo run db:seed",
+    "storybook": "turbo run storybook",
+    "test:e2e": "turbo run test:e2e",
+    "test:integration": "turbo run test:integration",
+    "test:load": "k6 run scripts/load-test.js",
+    "analyze": "turbo run analyze"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "services/*"
+  ],
+  "devDependencies": {
+    "@turbo/gen": "^1.11.2",
+    "prettier": "^3.1.1",
+    "turbo": "^1.11.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.17.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.1"
+}

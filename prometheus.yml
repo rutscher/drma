@@ -1,0 +1,44 @@
+# Prometheus configuration
+# Because we absolutely need metrics for a gravel bike race website
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'grvl-drma-production'
+    environment: 'production'
+
+# Alertmanager configuration (for those critical gravel alerts)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+# Scrape configurations
+scrape_configs:
+  # Monitor the web app
+  - job_name: 'grvl-drma-web'
+    static_configs:
+      - targets: ['web:3000']
+        labels:
+          service: 'web'
+          tier: 'frontend'
+
+  # Monitor Prometheus itself (meta)
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Monitor PostgreSQL
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+        labels:
+          service: 'database'
+
+  # Monitor Redis
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+        labels:
+          service: 'cache'

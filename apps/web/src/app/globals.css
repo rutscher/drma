@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24 100% 60%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 24 100% 60%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 24 100% 60%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 24 100% 60%;
+  }
+
+  [data-theme='gravel'] {
+    --background: 20 3% 6%;
+    --foreground: 60 9% 98%;
+    --card: 24 6% 10%;
+    --card-foreground: 60 9% 98%;
+    --popover: 0 0% 15%;
+    --popover-foreground: 60 9% 98%;
+    --primary: 25 5% 45%;
+    --primary-foreground: 60 9% 98%;
+    --secondary: 27 6% 25%;
+    --secondary-foreground: 60 9% 98%;
+    --muted: 25 4% 20%;
+    --muted-foreground: 25 5% 64%;
+    --accent: 27 6% 25%;
+    --accent-foreground: 60 9% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9% 98%;
+    --border: 27 6% 25%;
+    --input: 27 6% 25%;
+    --ring: 25 5% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar for gravel vibes */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gravel-200 dark:bg-gravel-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gravel-400 dark:bg-gravel-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gravel-500 dark:bg-gravel-500;
+}
+
+/* Gravel texture overlay */
+.gravel-texture {
+  position: relative;
+}
+
+.gravel-texture::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C9C9C' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Loading states with gravel shake */
+.loading-gravel {
+  @apply animate-gravel-shake;
+}
+
+/* Dust particle effects */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.dust-particle {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Command palette styles */
+[cmdk-root] {
+  @apply max-w-2xl mx-auto;
+}
+
+[cmdk-input] {
+  @apply w-full px-4 py-3 text-lg bg-transparent border-0 outline-none placeholder:text-muted-foreground;
+}
+
+[cmdk-item] {
+  @apply px-4 py-3 cursor-pointer rounded-md transition-colors;
+}
+
+[cmdk-item][data-selected='true'] {
+  @apply bg-accent text-accent-foreground;
+}

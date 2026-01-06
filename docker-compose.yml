@@ -1,0 +1,115 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database (because we need persistence for... reasons)
+  postgres:
+    image: postgres:16-alpine
+    container_name: grvl-drma-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: grvldrma
+      POSTGRES_USER: gravel_admin
+      POSTGRES_PASSWORD: super_secure_gravel_password_123
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U gravel_admin -d grvldrma']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis (for caching static content that never changes)
+  redis:
+    image: redis:7-alpine
+    container_name: grvl-drma-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Next.js Web App
+  web:
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+      target: production
+    container_name: grvl-drma-web
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://gravel_admin:super_secure_gravel_password_123@postgres:5432/grvldrma
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/api/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Nginx (because we need a reverse proxy for a single service)
+  nginx:
+    image: nginx:alpine
+    container_name: grvl-drma-nginx
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - web
+
+  # Prometheus (because metrics are CRITICAL for a race website)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: grvl-drma-prometheus
+    restart: unless-stopped
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+  # Grafana (for beautiful dashboards nobody will look at)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grvl-drma-grafana
+    restart: unless-stopped
+    ports:
+      - '3001:3000'
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=gravel_is_life
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  default:
+    name: grvl-drma-network

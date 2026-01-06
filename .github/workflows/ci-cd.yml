@@ -1,0 +1,253 @@
+name: 'Unnecessarily Complex CI/CD Pipeline'
+
+on:
+  push:
+    branches: [main, develop, 'feature/**', 'hotfix/**']
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run every day at 3 AM because why not
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '8.15.1'
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  # Job 1: Code Quality Checks
+  code-quality:
+    name: 'Code Quality Checks'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history for SonarQube
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 🎯 Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: 🗄️ Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: 📥 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔍 Lint code
+        run: pnpm run lint
+
+      - name: 🎨 Check formatting
+        run: pnpm run format --check
+
+      - name: 🔬 Type check
+        run: pnpm run type-check
+
+  # Job 2: Unit Tests
+  unit-tests:
+    name: 'Unit Tests'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 📥 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🧪 Run unit tests
+        run: pnpm run test
+        env:
+          CI: true
+
+      - name: 📊 Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/coverage-final.json
+          flags: unittests
+
+  # Job 3: E2E Tests
+  e2e-tests:
+    name: 'E2E Tests'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 📥 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🎭 Install Playwright
+        run: pnpm exec playwright install --with-deps
+
+      - name: 🧪 Run E2E tests
+        run: pnpm run test:e2e
+        env:
+          CI: true
+
+      - name: 📸 Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  # Job 4: Build
+  build:
+    name: 'Build Application'
+    runs-on: ubuntu-latest
+    needs: [code-quality, unit-tests]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 📥 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🏗️ Build
+        run: pnpm run build
+
+      - name: 📊 Analyze bundle
+        run: pnpm run analyze --filter=@grvl-drma/web
+        env:
+          ANALYZE: true
+
+  # Job 5: Docker Build (because of course)
+  docker-build:
+    name: 'Build Docker Image'
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🔑 Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📝 Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
+
+      - name: 🏗️ Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./apps/web/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Job 6: Security Scan
+  security-scan:
+    name: 'Security Scan'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔒 Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: 📤 Upload Trivy results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # Job 7: Deploy to Kubernetes (if on main)
+  deploy:
+    name: 'Deploy to Kubernetes'
+    runs-on: ubuntu-latest
+    needs: [docker-build, e2e-tests]
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ☸️ Setup kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: 🔐 Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+          echo "KUBECONFIG=$(pwd)/kubeconfig" >> $GITHUB_ENV
+
+      - name: 🚀 Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/
+          kubectl rollout status deployment/grvl-drma-web -n grvl-drma
+
+      - name: ✅ Verify deployment
+        run: |
+          kubectl get pods -n grvl-drma
+          kubectl get services -n grvl-drma
+
+  # Job 8: Notify (because we need notifications)
+  notify:
+    name: 'Notify Team'
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    if: always()
+    steps:
+      - name: 📣 Send notification
+        run: |
+          echo "Deployment completed! 🎉"
+          echo "Status: ${{ needs.deploy.result }}"
